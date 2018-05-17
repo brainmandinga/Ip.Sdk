@@ -2,6 +2,7 @@
 using Ip.Sdk.Security.AuthObjects;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ip.Sdk.Security.Interfaces
 {
@@ -118,11 +119,67 @@ namespace Ip.Sdk.Security.Interfaces
         bool IsInRole(string roleName);
 
         /// <summary>
+        /// Identifies if a user is in a role
+        /// </summary>
+        /// <param name="roleName">The name of the role to check</param>
+        /// <returns>True if in the role, false if not</returns>
+        Task<bool> IsInRoleAsync(string roleName);
+
+        /// <summary>
         /// Gets a claim, if available
         /// </summary>
         /// <param name="claimKey">The claim key to return</param>
         /// <returns>A claim based on the key</returns>
         IIpClaim GetClaim(string claimKey);
+
+        /// <summary>
+        /// Gets a claim, if available
+        /// </summary>
+        /// <param name="claimKey">The claim key to return</param>
+        /// <returns>A claim based on the key</returns>
+        Task<IIpClaim> GetClaimAsync(string claimKey);
+
+        /// <summary>
+        /// Gets a user by their Id
+        /// </summary>
+        /// <param name="id">The Id to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        IIpUser GetById(Guid id);
+
+        /// <summary>
+        /// Gets a user by their Id
+        /// </summary>
+        /// <param name="id">The Id to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        Task<IIpUser> GetByIdAsync(Guid id);
+
+        /// <summary>
+        /// Gets a user by their username
+        /// </summary>
+        /// <param name="username">The username to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        IIpUser GetByUsername(string username);
+
+        /// <summary>
+        /// Gets a user by their username
+        /// </summary>
+        /// <param name="username">The username to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        Task<IIpUser> GetByUsernameAsync(string username);
+
+        /// <summary>
+        /// Gets a user by their email address
+        /// </summary>
+        /// <param name="email">The email address to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        IIpUser GetByEmailAddress(string email);
+
+        /// <summary>
+        /// Gets a user by their email address
+        /// </summary>
+        /// <param name="email">The email address to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        Task<IIpUser> GetByEmailAddressAsync(string email);
 
         /// <summary>
         /// Authenticates the users' password
@@ -132,13 +189,11 @@ namespace Ip.Sdk.Security.Interfaces
         IpResponse<AuthenticationStatus> Authenticate(string password);
 
         /// <summary>
-        /// Creates a new user
+        /// Authenticates the users' password
         /// </summary>
-        /// <param name="user">The IIpUser object to create</param>
-        /// <param name="password">The password the user wants</param>
-        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
-        /// <returns>A response based on the creation</returns>
-        IpResponse<IpUserEditStatus> Create(IIpUser user, string password, string confirmPassword);
+        /// <param name="password">The password to authenticate</param>
+        /// <returns>A response based on the authentication results</returns>
+        Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string password);
 
         /// <summary>
         /// Updates an existing user
@@ -148,11 +203,25 @@ namespace Ip.Sdk.Security.Interfaces
         IpResponse<IpUserEditStatus> Update(IIpUser user);
 
         /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="user">The IIpUser object to update</param>
+        /// <returns>A response based on the update</returns>
+        Task<IpResponse<IpUserEditStatus>> UpdateAsync(IIpUser user);
+
+        /// <summary>
         /// Deletes a user by their Id
         /// </summary>
         /// <param name="id">The Id of the user</param>
         /// <returns>A response based on the deletion</returns>
         IpResponse<IpUserEditStatus> Delete();
+
+        /// <summary>
+        /// Deletes a user by their Id
+        /// </summary>
+        /// <param name="id">The Id of the user</param>
+        /// <returns>A response based on the deletion</returns>
+        Task<IpResponse<IpUserEditStatus>> DeleteAsync();
 
         /// <summary>
         /// Changes a user's password
@@ -163,6 +232,14 @@ namespace Ip.Sdk.Security.Interfaces
         IpResponse<PasswordEditStatus> ChangePassword(string password, string confirmPassword);
 
         /// <summary>
+        /// Changes a user's password
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the change of password</returns>
+        Task<IpResponse<PasswordEditStatus>> ChangePasswordAsync(string password, string confirmPassword);
+
+        /// <summary>
         /// Triggers the reset password process
         /// </summary>
         /// <returns>A response based on the password reset</returns>
@@ -171,10 +248,24 @@ namespace Ip.Sdk.Security.Interfaces
         /// <summary>
         /// Triggers the reset password process
         /// </summary>
+        /// <returns>A response based on the password reset</returns>
+        Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync();
+
+        /// <summary>
+        /// Triggers the reset password process
+        /// </summary>
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the password reset</returns>
         IpResponse<PasswordEditStatus> ResetPassword(string password, string confirmPassword);
+
+        /// <summary>
+        /// Triggers the reset password process
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the password reset</returns>
+        Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(string password, string confirmPassword);
 
         /// <summary>
         /// Triggers the reset password process using security questions and answers
@@ -186,10 +277,26 @@ namespace Ip.Sdk.Security.Interfaces
         /// <summary>
         /// Triggers the reset password process using security questions and answers
         /// </summary>
+        /// <param name="securityAnswers">The security questions and answers collection</param>
+        /// <returns>A response based on the password reset</returns>
+        Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(IList<IIpSecurityQuestion> securityAnswers);
+
+        /// <summary>
+        /// Triggers the reset password process using security questions and answers
+        /// </summary>
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <param name="securityAnswers">The security questions and answers collection</param>
         /// <returns>A response based on the password reset</returns>
         IpResponse<PasswordEditStatus> ResetPassword(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers);
+
+        /// <summary>
+        /// Triggers the reset password process using security questions and answers
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <param name="securityAnswers">The security questions and answers collection</param>
+        /// <returns>A response based on the password reset</returns>
+        Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers);
     }
 }

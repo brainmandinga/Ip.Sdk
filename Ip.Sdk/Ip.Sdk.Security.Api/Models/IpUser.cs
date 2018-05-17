@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Ip.Sdk.Security.Api.Models
 {
@@ -142,6 +143,16 @@ namespace Ip.Sdk.Security.Api.Models
         }
 
         /// <summary>
+        /// Identifies if a user is in a role
+        /// </summary>
+        /// <param name="roleName">The name of the role to check</param>
+        /// <returns>True if in the role, false if not</returns>
+        public async virtual Task<bool> IsInRoleAsync(string roleName)
+        {
+            return await Task.Run(() => IsInRole(roleName));
+        }
+
+        /// <summary>
         /// Gets a claim, if available
         /// </summary>
         /// <param name="claimKey">The claim key to return. Claims are NOT case sensitive</param>
@@ -151,7 +162,77 @@ namespace Ip.Sdk.Security.Api.Models
             return Claims.FirstOrDefault(c => c.ClaimKey.Equals(claimKey, StringComparison.OrdinalIgnoreCase));
         }
 
+        /// <summary>
+        /// Gets a claim, if available
+        /// </summary>
+        /// <param name="claimKey">The claim key to return</param>
+        /// <returns>A claim based on the key</returns>
+        public async virtual Task<IIpClaim> GetClaimAsync(string claimKey)
+        {
+            return await Task.Run(() => GetClaim(claimKey));
+        }
+
         //TODO: Finish Implementing all below
+
+        /// <summary>
+        /// Gets a user by their Id
+        /// </summary>
+        /// <param name="id">The Id to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        public virtual IIpUser GetById(Guid id)
+        {
+            return new IpUser();
+        }
+
+        /// <summary>
+        /// Gets a user by their Id
+        /// </summary>
+        /// <param name="id">The Id to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        public async virtual Task<IIpUser> GetByIdAsync(Guid id)
+        {
+            return await Task.Run(() => GetById(id));
+        }
+
+        /// <summary>
+        /// Gets a user by their username
+        /// </summary>
+        /// <param name="username">The username to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        public virtual IIpUser GetByUsername(string username)
+        {
+            return new IpUser();
+        }
+
+        /// <summary>
+        /// Gets a user by their username
+        /// </summary>
+        /// <param name="username">The username to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        public async virtual Task<IIpUser> GetByUsernameAsync(string username)
+        {
+            return await Task.Run(() => GetByUsername(username));
+        }
+
+        /// <summary>
+        /// Gets a user by their email address
+        /// </summary>
+        /// <param name="email">The email address to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        public virtual IIpUser GetByEmailAddress(string email)
+        {
+            return new IpUser();
+        }
+
+        /// <summary>
+        /// Gets a user by their email address
+        /// </summary>
+        /// <param name="email">The email address to retrieve</param>
+        /// <returns>An IIpUser object</returns>
+        public async virtual Task<IIpUser> GetByEmailAddressAsync(string email)
+        {
+            return await Task.Run(() => GetByEmailAddress(email));
+        }
 
         /// <summary>
         /// Authenticates the users' password
@@ -164,26 +245,13 @@ namespace Ip.Sdk.Security.Api.Models
         }
 
         /// <summary>
-        /// Creates a new user
+        /// Authenticates the users' password
         /// </summary>
-        /// <param name="user">The IIpUser object to create</param>
-        /// <returns>A response based on the creation</returns>
-        public virtual IpResponse<IpUserEditStatus> Create(IIpUser user, string password, string confirmPassword)
+        /// <param name="password">The password to authenticate</param>
+        /// <returns>A response based on the authentication results</returns>
+        public async virtual Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string password)
         {
-            var validPassword = ValidatePassword(password, confirmPassword);
-            var validUser = ValidateUser(user);
-
-            if (validPassword != PasswordEditStatus.Success)
-            {
-                return new IpResponse<IpUserEditStatus> { Status = IpUserEditStatus.PasswordInvalid, ResponseMessage = validPassword.ToDescription() };
-            }
-
-            if (validUser != IpUserEditStatus.Success)
-            {
-                return new IpResponse<IpUserEditStatus> { Status = validUser, ResponseMessage = validUser.ToDescription() };
-            }
-
-            return new IpResponse<IpUserEditStatus>();
+            return await Task.Run(() => Authenticate(password));
         }
 
         /// <summary>
@@ -204,6 +272,16 @@ namespace Ip.Sdk.Security.Api.Models
         }
 
         /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="user">The IIpUser object to update</param>
+        /// <returns>A response based on the update</returns>
+        public async virtual Task<IpResponse<IpUserEditStatus>> UpdateAsync(IIpUser user)
+        {
+            return await Task.Run(() => Update(user));
+        }
+
+        /// <summary>
         /// Deletes a user by their Id
         /// </summary>
         /// <param name="id">The Id of the user</param>
@@ -211,6 +289,16 @@ namespace Ip.Sdk.Security.Api.Models
         public virtual IpResponse<IpUserEditStatus> Delete()
         {
             return new IpResponse<IpUserEditStatus>();
+        }
+
+        /// <summary>
+        /// Deletes a user by their Id
+        /// </summary>
+        /// <param name="id">The Id of the user</param>
+        /// <returns>A response based on the deletion</returns>
+        public async virtual Task<IpResponse<IpUserEditStatus>> DeleteAsync()
+        {
+            return await Task.Run(() => Delete());
         }
 
         /// <summary>
@@ -232,12 +320,32 @@ namespace Ip.Sdk.Security.Api.Models
         }
 
         /// <summary>
+        /// Changes a user's password
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the change of password</returns>
+        public async virtual Task<IpResponse<PasswordEditStatus>> ChangePasswordAsync(string password, string confirmPassword)
+        {
+            return await Task.Run(() => ChangePassword(password, confirmPassword));
+        }
+
+        /// <summary>
         /// Triggers the reset password process
         /// </summary>
         /// <returns>A response based on the password reset</returns>
         public virtual IpResponse<PasswordEditStatus> ResetPassword()
         {
             return new IpResponse<PasswordEditStatus>();
+        }
+
+        /// <summary>
+        /// Triggers the reset password process
+        /// </summary>
+        /// <returns>A response based on the password reset</returns>
+        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync()
+        {
+            return await Task.Run(() => ResetPassword());
         }
 
         /// <summary>
@@ -259,6 +367,17 @@ namespace Ip.Sdk.Security.Api.Models
         }
 
         /// <summary>
+        /// Triggers the reset password process
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the password reset</returns>
+        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(string password, string confirmPassword)
+        {
+            return await Task.Run(() => ResetPassword(password, confirmPassword));
+        }
+
+        /// <summary>
         /// Triggers the reset password process using security questions and answers
         /// </summary>
         /// <param name="securityAnswers">The security questions and answers collection</param>
@@ -273,6 +392,16 @@ namespace Ip.Sdk.Security.Api.Models
             }
 
             return new IpResponse<PasswordEditStatus>();
+        }
+
+        /// <summary>
+        /// Triggers the reset password process using security questions and answers
+        /// </summary>
+        /// <param name="securityAnswers">The security questions and answers collection</param>
+        /// <returns>A response based on the password reset</returns>
+        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(IList<IIpSecurityQuestion> securityAnswers)
+        {
+            return await Task.Run(() => ResetPassword(securityAnswers));
         }
 
         /// <summary>
@@ -298,6 +427,18 @@ namespace Ip.Sdk.Security.Api.Models
             }
 
             return new IpResponse<PasswordEditStatus>();
+        }
+
+        /// <summary>
+        /// Triggers the reset password process using security questions and answers
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <param name="securityAnswers">The security questions and answers collection</param>
+        /// <returns>A response based on the password reset</returns>
+        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers)
+        {
+            return await Task.Run(() => ResetPassword(password, confirmPassword, securityAnswers));
         }
 
         #region Helpers

@@ -1,4 +1,6 @@
-﻿namespace Ip.Sdk.Security.Interfaces
+﻿using Microsoft.Owin.Security.OAuth;
+
+namespace Ip.Sdk.Security.Interfaces
 {
     public interface IIpSecurityPolicy
     {
@@ -6,6 +8,11 @@
         /// The regular expression that handles matching of password complexity
         /// </summary>
         string PasswordComplexityRegex { get; set; }
+
+        /// <summary>
+        /// The API Authentication Endpoint
+        /// </summary>
+        string AuthenticationEndpoint { get; set; }
 
         /// <summary>
         /// The minimum password length
@@ -46,5 +53,20 @@
         /// Should the user use security questions/answers
         /// </summary>
         bool UseSecurityQuestions { get; set; }
+
+        /// <summary>
+        /// Should the authentication allow plain http
+        /// </summary>
+        bool AllowInsecureHttp { get; set; }
+
+        /// <summary>
+        /// The OAuth authorization provide to use
+        /// </summary>
+        OAuthAuthorizationServerProvider Provider { get; set; }
+
+        /// <summary>
+        /// Loads the default security policy
+        /// </summary>
+        void LoadDefaultSecurityPolicy();
     }
 }
