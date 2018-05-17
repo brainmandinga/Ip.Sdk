@@ -1,4 +1,5 @@
-﻿using Ip.Sdk.Security.AuthObjects;
+﻿using Ip.Sdk.Commons.Enumerations;
+using Ip.Sdk.Security.AuthObjects;
 using System;
 using System.Collections.Generic;
 
@@ -23,6 +24,11 @@ namespace Ip.Sdk.Security.Interfaces
         /// Username is a unique field that identifies a user
         /// </summary>
         string Username { get; set; }
+
+        /// <summary>
+        /// Email address for the user
+        /// </summary>
+        string EmailAddress { get; set; }
 
         /// <summary>
         /// PasswordHash is the secret to authenticate the user
@@ -85,6 +91,11 @@ namespace Ip.Sdk.Security.Interfaces
         BaseTwoFactorDestination TwoFactorDestination { get; set; }
 
         /// <summary>
+        /// The security policy applied to the user
+        /// </summary>
+        IIpSecurityPolicy UserSecurityPolicy { get; set; }
+
+        /// <summary>
         /// The roles a user belongs to
         /// </summary>
         IList<IIpRole> Roles { get; set; }
@@ -97,7 +108,7 @@ namespace Ip.Sdk.Security.Interfaces
         /// <summary>
         /// The security questions the user used
         /// </summary>
-        IDictionary<IIpSecurityQuestion, string> SecurityQuestions { get; set; }
+        IList<IIpSecurityQuestion> SecurityQuestions { get; set; }
 
         /// <summary>
         /// Identifies if a user is in a role
@@ -118,6 +129,67 @@ namespace Ip.Sdk.Security.Interfaces
         /// </summary>
         /// <param name="password">The password to authenticate</param>
         /// <returns>A response based on the authentication results</returns>
-        AuthenticationResponse Authenticate(string password);
+        IpResponse<AuthenticationStatus> Authenticate(string password);
+
+        /// <summary>
+        /// Creates a new user
+        /// </summary>
+        /// <param name="user">The IIpUser object to create</param>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the creation</returns>
+        IpResponse<IpUserEditStatus> Create(IIpUser user, string password, string confirmPassword);
+
+        /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="user">The IIpUser object to update</param>
+        /// <returns>A response based on the update</returns>
+        IpResponse<IpUserEditStatus> Update(IIpUser user);
+
+        /// <summary>
+        /// Deletes a user by their Id
+        /// </summary>
+        /// <param name="id">The Id of the user</param>
+        /// <returns>A response based on the deletion</returns>
+        IpResponse<IpUserEditStatus> Delete();
+
+        /// <summary>
+        /// Changes a user's password
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the change of password</returns>
+        IpResponse<PasswordEditStatus> ChangePassword(string password, string confirmPassword);
+
+        /// <summary>
+        /// Triggers the reset password process
+        /// </summary>
+        /// <returns>A response based on the password reset</returns>
+        IpResponse<PasswordEditStatus> ResetPassword();
+
+        /// <summary>
+        /// Triggers the reset password process
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <returns>A response based on the password reset</returns>
+        IpResponse<PasswordEditStatus> ResetPassword(string password, string confirmPassword);
+
+        /// <summary>
+        /// Triggers the reset password process using security questions and answers
+        /// </summary>
+        /// <param name="securityAnswers">The security questions and answers collection</param>
+        /// <returns>A response based on the password reset</returns>
+        IpResponse<PasswordEditStatus> ResetPassword(IList<IIpSecurityQuestion> securityAnswers);
+
+        /// <summary>
+        /// Triggers the reset password process using security questions and answers
+        /// </summary>
+        /// <param name="password">The password the user wants</param>
+        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
+        /// <param name="securityAnswers">The security questions and answers collection</param>
+        /// <returns>A response based on the password reset</returns>
+        IpResponse<PasswordEditStatus> ResetPassword(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers);
     }
 }

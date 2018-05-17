@@ -8,6 +8,16 @@
         string PasswordComplexityRegex { get; set; }
 
         /// <summary>
+        /// The minimum password length
+        /// </summary>
+        int MinimumPasswordLength { get; set; }
+
+        /// <summary>
+        /// The maximum password length
+        /// </summary>
+        int MaximumPasswordLength { get; set; }
+
+        /// <summary>
         /// How many days is a password allowed to be 
         /// </summary>
         int PasswordExpirationInDays { get; set; }

@@ -9,5 +9,8 @@ namespace Ip.Sdk.ErrorHandling.CustomExceptions
 
         public TwoFactorValueException(string message)
             : base(message) { }
+
+        public TwoFactorValueException(string message, Exception innerException)
+            : base(message, innerException) { }
     }
 }

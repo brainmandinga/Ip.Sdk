@@ -9,5 +9,8 @@ namespace Ip.Sdk.ErrorHandling.CustomExceptions
 
         public SystemSettingException(string message)
             : base(message) { }
+
+        public SystemSettingException(string message, Exception innerException)
+            : base(message, innerException) { }
     }
 }

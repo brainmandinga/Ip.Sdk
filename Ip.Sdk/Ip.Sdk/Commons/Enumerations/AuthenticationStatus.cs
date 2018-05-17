@@ -49,7 +49,10 @@ namespace Ip.Sdk.Commons.Enumerations
         [Description("User not authorized")]
         NotAuthorized = 7,
 
+        /// <summary>
+        /// Unknown failure reason
+        /// </summary>
         [Description("Failed for other reasons")]
-        Other = 8
+        Other = 0
     }
 }
