@@ -13,6 +13,6 @@
         /// <summary>
         /// The claim's value
         /// </summary>
-        object ClaimValue { get; set; }
+        string ClaimValue { get; set; }
     }
 }

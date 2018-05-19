@@ -255,6 +255,28 @@ namespace Ip.Sdk.Security.Api.Models
         }
 
         /// <summary>
+        /// Authenticates the users' password
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">The password to authenticate</param>
+        /// <returns>A response based on the authentication results</returns>
+        public virtual IpResponse<AuthenticationStatus> Authenticate(string username, string password)
+        {
+            return new IpResponse<AuthenticationStatus>();
+        }
+
+        /// <summary>
+        /// Authenticates the users' password
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">The password to authenticate</param>
+        /// <returns>A response based on the authentication results</returns>
+        public async virtual Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string username, string password)
+        {
+            return await Task.Run(() => Authenticate(username, password));
+        }
+
+        /// <summary>
         /// Updates an existing user
         /// </summary>
         /// <param name="user">The IIpUser object to update</param>

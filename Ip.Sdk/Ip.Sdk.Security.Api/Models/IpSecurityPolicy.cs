@@ -1,9 +1,7 @@
-﻿using Ip.Sdk.Security.Interfaces;
+﻿using Ip.Sdk.Commons.Configuration;
+using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin.Security.OAuth;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Ip.Sdk.Security.Api.Models
 {
@@ -65,6 +63,11 @@ namespace Ip.Sdk.Security.Api.Models
         public bool AllowInsecureHttp { get; set; }
 
         /// <summary>
+        /// Should the system allow CORS requests
+        /// </summary>
+        public bool AllowCors { get; set; }
+
+        /// <summary>
         /// The OAuth authorization provide to use
         /// </summary>
         public OAuthAuthorizationServerProvider Provider { get; set; }
@@ -86,11 +89,33 @@ namespace Ip.Sdk.Security.Api.Models
         /// </summary>
         public virtual void LoadDefaultSecurityPolicy()
         {
-            //TODO: Build up the security policy from?
-            var providerFullyQualifiedType = ""; //Get from the configuration
+            //TODO: When the Configuration Helper has been refactored to be more abstract, this will need to change.
+            var providerFullyQualifiedType = ConfigurationHelper.GetSystemSetting<string>("AuthProvider");
 
-            var providerType = Type.GetType(providerFullyQualifiedType);
-            Provider = (OAuthAuthorizationServerProvider)Activator.CreateInstance(providerType);
+            try
+            {
+                var providerType = Type.GetType(providerFullyQualifiedType);
+                Provider = (OAuthAuthorizationServerProvider)Activator.CreateInstance(providerType);
+            }
+            catch
+            {
+                //load the default provider
+                Provider = new IpAuthorizationServerProvider();
+            }
+
+            //Load values from configuration
+            PasswordComplexityRegex = ConfigurationHelper.GetSystemSetting<string>("PasswordComplexityRegex");
+            AuthenticationEndpoint = ConfigurationHelper.GetSystemSetting<string>("AuthenticationEndpoint");
+            MinimumPasswordLength = ConfigurationHelper.GetSystemSetting<int>("MinimumPasswordLength");
+            MaximumPasswordLength = ConfigurationHelper.GetSystemSetting<int>("MaximumPasswordLength");
+            PasswordExpirationInDays = ConfigurationHelper.GetSystemSetting<int>("PasswordExpirationInDays");
+            AuthTokenExpirationMinutes = ConfigurationHelper.GetSystemSetting<int>("AuthTokenExpirationMinutes");
+            LockoutAttemptCount = ConfigurationHelper.GetSystemSetting<int>("LockoutAttemptCount");
+            RequireRegistrationConfirmation = ConfigurationHelper.GetSystemSetting<bool>("RequireRegistrationConfirmation");
+            UseTwoFactorAuthentication = ConfigurationHelper.GetSystemSetting<bool>("UseTwoFactorAuthentication");
+            UseSecurityQuestions = ConfigurationHelper.GetSystemSetting<bool>("UseSecurityQuestions");
+            AllowInsecureHttp = ConfigurationHelper.GetSystemSetting<bool>("AllowInsecureHttp");
+            AllowCors = ConfigurationHelper.GetSystemSetting<bool>("AllowCors");
         }
     }
 }

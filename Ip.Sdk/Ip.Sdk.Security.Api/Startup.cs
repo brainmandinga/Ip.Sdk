@@ -1,4 +1,5 @@
 ﻿using Ip.Sdk.Security.Api.Models;
+using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
@@ -13,16 +14,21 @@ namespace Ip.Sdk.Security.Api
         public void Configuration (IAppBuilder app)
         {
             var config = new HttpConfiguration();
+            var securityPolicy = new IpSecurityPolicy(true);
 
-            ConfigureOAuth(app);            
+            ConfigureOAuth(app, securityPolicy);            
             WebApiConfig.Register(config);
+
+            if (securityPolicy.AllowCors)
+            {
+                app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
+            }
+
             app.UseWebApi(config);
         }
 
-        public void ConfigureOAuth(IAppBuilder app)
-        {
-            var securityPolicy = new IpSecurityPolicy(true);
-
+        public void ConfigureOAuth(IAppBuilder app, IIpSecurityPolicy securityPolicy)
+        {        
             var serverOptions = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = securityPolicy.AllowInsecureHttp,

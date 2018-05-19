@@ -196,6 +196,22 @@ namespace Ip.Sdk.Security.Interfaces
         Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string password);
 
         /// <summary>
+        /// Authenticates the users' password
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">The password to authenticate</param>
+        /// <returns>A response based on the authentication results</returns>
+        IpResponse<AuthenticationStatus> Authenticate(string username, string password);
+
+        /// <summary>
+        /// Authenticates the users' password
+        /// </summary>
+        /// <param name="username">The username of the user</param>
+        /// <param name="password">The password to authenticate</param>
+        /// <returns>A response based on the authentication results</returns>
+        Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string username, string password);
+
+        /// <summary>
         /// Updates an existing user
         /// </summary>
         /// <param name="user">The IIpUser object to update</param>

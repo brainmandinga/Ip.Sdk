@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>TestHarness</RootNamespace>
     <AssemblyName>TestHarness</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,6 +48,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ip.Sdk.Api\Ip.Sdk.Api.csproj">
+      <Project>{c4261c6c-a132-428a-9913-edabeda98506}</Project>
+      <Name>Ip.Sdk.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ip.Sdk.Security.Api\Ip.Sdk.Security.Api.csproj">
+      <Project>{e4eee76c-2cd6-4968-b9bc-1b19ccdb3ca8}</Project>
+      <Name>Ip.Sdk.Security.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ip.Sdk\Ip.Sdk.csproj">
+      <Project>{5ceec1b0-a6ad-4507-bd6b-853a2ea314ce}</Project>
+      <Name>Ip.Sdk</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

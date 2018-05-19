@@ -60,6 +60,11 @@ namespace Ip.Sdk.Security.Interfaces
         bool AllowInsecureHttp { get; set; }
 
         /// <summary>
+        /// Should the system allow CORS requests
+        /// </summary>
+        bool AllowCors { get; set; }
+
+        /// <summary>
         /// The OAuth authorization provide to use
         /// </summary>
         OAuthAuthorizationServerProvider Provider { get; set; }
