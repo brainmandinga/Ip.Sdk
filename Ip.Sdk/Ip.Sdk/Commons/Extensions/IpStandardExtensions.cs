@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ip.Sdk.ErrorHandling;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -6,7 +7,7 @@ using System.Xml.Linq;
 
 namespace Ip.Sdk.Commons.Extensions
 {
-    public static class StandardExtensions
+    public static class IpStandardExtensions
     {
         /// <summary>
         /// Returns a concatenated string of the exception details
@@ -30,11 +31,19 @@ namespace Ip.Sdk.Commons.Extensions
             var type = typeof(T);
 
             if (type == typeof(bool))
+            {
                 return (T)Convert.ChangeType(value.ToBool(), type);
+            }
+
             if (value == null || value is DBNull)
+            {
                 return default(T);
+            }
+
             if (IsNullableValueType<T>())
+            {
                 return (T)Convert.ChangeType(value, Nullable.GetUnderlyingType(type));
+            }
 
             return (T)Convert.ChangeType(value, type);
         }
@@ -49,7 +58,9 @@ namespace Ip.Sdk.Commons.Extensions
         {
             //If the enumeration is not defined, return the default
             if (!Enum.IsDefined(typeof(T), s))
+            {
                 return default(T);
+            }
 
             //Parse and return the enum
             return (T)Enum.Parse(typeof(T), s);
@@ -66,11 +77,15 @@ namespace Ip.Sdk.Commons.Extensions
         {
             //If the string is null or empty, return the deafult
             if (string.IsNullOrWhiteSpace(s))
+            {
                 return defaultValue;
+            }
 
             //If the enumeration is not defined, return the specified default
             if (!Enum.IsDefined(typeof(T), s))
+            {
                 return defaultValue;
+            }
 
             //Parse and return the enum
             return (T)Enum.Parse(typeof(T), s);
@@ -93,32 +108,6 @@ namespace Ip.Sdk.Commons.Extensions
         }
 
         /// <summary>
-        /// Strips Non-ASCII characters from a string
-        /// </summary>
-        /// <param name="value">The string to sanitize</param>
-        /// <returns>A sanitized string</returns>
-        public static string StripNonAsciiCharacters(this string value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-                value = Regex.Replace(value, @"[^\u0000-\u007F]", string.Empty);
-
-            return value;
-        }
-
-        /// <summary>
-        /// Strip line control and tabs
-        /// </summary>
-        /// <param name="value">The string to sanitize</param>
-        /// <returns>A sanitized string</returns>
-        public static string StripLineControl(this string value)
-        {
-            value = value.Replace("\t", " ");
-            value = value.Replace("\n", " ");
-            value = value.Replace("\r", " ");
-            return value;
-        }
-
-        /// <summary>
         /// Converts a string to a date time
         /// </summary>
         /// <param name="value">The value to convert</param>
@@ -127,36 +116,13 @@ namespace Ip.Sdk.Commons.Extensions
         public static DateTime ToDateTime(this string value, bool isTimestamp = false)
         {
             if (isTimestamp)
+            {
                 return new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(value.ToLong()).ToLocalTime();
+            }
 
             DateTime result;
             DateTime.TryParse(value, out result);
             return result;
-        }
-
-        /// <summary>
-        /// Converts a string to a date time
-        /// </summary>
-        /// <param name="value">The value to convert</param>
-        /// <returns>A converted DateTime object</returns>
-        public static DateTime ToExcelDateTime(this string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return new DateTime();
-
-            var date = value.ToDouble();
-
-            if (date < 1)
-                return value.ToDateTime();
-
-            var refDate = new DateTime(1900, 1, 1);
-
-            if (date > 60d)
-                date -= 2;
-            else
-                date -= 1;
-
-            return refDate.AddDays(date);
         }
 
         /// <summary>
@@ -166,8 +132,7 @@ namespace Ip.Sdk.Commons.Extensions
         /// <returns>A converted decimal object</returns>
         public static decimal ToDecimal(this string value)
         {
-            decimal result;
-            decimal.TryParse(value, out result);
+            decimal.TryParse(value, out decimal result);
             return result;
         }
 
@@ -178,8 +143,7 @@ namespace Ip.Sdk.Commons.Extensions
         /// <returns>A converted double object</returns>
         public static double ToDouble(this string value)
         {
-            double result;
-            double.TryParse(value, out result);
+            double.TryParse(value, out double result);
             return result;
         }
 
@@ -191,13 +155,16 @@ namespace Ip.Sdk.Commons.Extensions
         public static int ToInt(this string value)
         {
             if (string.IsNullOrWhiteSpace(value))
+            {
                 return 0;
+            }
 
             if (value.Contains("."))
+            {
                 value = value.Substring(0, value.IndexOf(".", StringComparison.Ordinal));
+            }
 
-            int result;
-            int.TryParse(value, out result);
+            int.TryParse(value, out int result);
             return result;
         }
 
@@ -209,10 +176,11 @@ namespace Ip.Sdk.Commons.Extensions
         public static long ToLong(this string value)
         {
             if (value.Contains("."))
+            {
                 value = value.Substring(0, value.IndexOf(".", StringComparison.Ordinal));
+            }
 
-            long result;
-            long.TryParse(value, out result);
+            long.TryParse(value, out long result);
             return result;
         }
 
@@ -227,6 +195,31 @@ namespace Ip.Sdk.Commons.Extensions
         }
 
         /// <summary>
+        /// Converts an object to a boolean, handles strings "true", "false" and numeric values of 0 or greater than 0 as well as boolean objects
+        /// </summary>
+        /// <param name="oValue">The object to convert</param>
+        /// <returns>A boolean representation of the object</returns>
+        public static bool ToBool(this object oValue)
+        {
+            if (oValue is int || oValue is long)
+            {
+                return Convert.ToInt64(oValue) > 0;
+            }
+
+            if (oValue is string)
+            {
+                return IsTrue(oValue.ToString());
+            }
+
+            if (oValue is bool)
+            {
+                return (bool)oValue;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Parses an XElement value to a specified Type
         /// </summary>
         /// <typeparam name="T">The Type to convert to</typeparam>
@@ -235,7 +228,9 @@ namespace Ip.Sdk.Commons.Extensions
         public static T ParseXElementValue<T>(this XElement element)
         {
             if (element == null)
+            {
                 return default(T);
+            }
 
             try
             {
@@ -279,7 +274,9 @@ namespace Ip.Sdk.Commons.Extensions
         public static int? ToEpoch(this DateTime? date)
         {
             if (!date.HasValue)
+            {
                 return null;
+            }
 
             return date.Value.ToEpoch();
         }
@@ -292,7 +289,9 @@ namespace Ip.Sdk.Commons.Extensions
         public static DateTime? FromEpoch(this int? epoch)
         {
             if (!epoch.HasValue)
+            {
                 return null;
+            }
 
             return epoch.Value.FromEpoch();
         }

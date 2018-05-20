@@ -1,7 +1,7 @@
 ﻿using Ip.Sdk.Security.Interfaces;
 using System.Collections.Generic;
 
-namespace Ip.Sdk.Security.Api.Models
+namespace Ip.Sdk.Api.Models
 {
     public class IpPasswordReset : IIpPasswordReset
     {

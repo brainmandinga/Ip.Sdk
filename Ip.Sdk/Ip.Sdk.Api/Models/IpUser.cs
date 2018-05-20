@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Ip.Sdk.Security.Api.Models
+namespace Ip.Sdk.Api.Models
 {
     public class IpUser : IIpUser
     {

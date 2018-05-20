@@ -1,10 +1,10 @@
-﻿using Ip.Sdk.Security.Api.Models;
+﻿using Ip.Sdk.Api.Models;
 using Ip.Sdk.Security.Interfaces;
 using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Ip.Sdk.Security.Api.Controllers
+namespace Ip.Sdk.Api.Controllers
 {
     [RoutePrefix("api/user")]
     public class IpUserController : ApiController

@@ -1,50 +1,13 @@
-﻿using System;
+﻿using Ip.Sdk.ErrorHandling.CustomExceptions;
+using System;
 using System.Data;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Ip.Sdk.Commons.Extensions
 {
-    public static class DataExtensions
-    {
-        /// <summary>
-        /// Copies one IDbDataParameter to another as a deep copy
-        /// </summary>
-        /// <param name="parameter">The output parameter</param>
-        /// <param name="sourceParameter">The source parameter</param>
-        /// <returns>An IDbDataParameter</returns>
-        public static IDbDataParameter CopyParameter(this IDbDataParameter parameter, IDbDataParameter sourceParameter)
-        {
-            parameter.DbType = sourceParameter.DbType;
-            parameter.Direction = sourceParameter.Direction;
-            parameter.ParameterName = sourceParameter.ParameterName;
-            parameter.Precision = sourceParameter.Precision;
-            parameter.Scale = sourceParameter.Scale;
-            parameter.Size = sourceParameter.Size;
-            parameter.SourceColumn = sourceParameter.SourceColumn;
-            parameter.SourceVersion = sourceParameter.SourceVersion;
-            parameter.Value = sourceParameter.Value;
-
-            return parameter;
-        }
-
-        /// <summary>
-        /// Converts an object to a boolean, handles strings "true", "false" and numeric values of 0 or greater than 0 as well as boolean objects
-        /// </summary>
-        /// <param name="oValue">The object to convert</param>
-        /// <returns>A boolean representation of the object</returns>
-        public static bool ToBool(this object oValue)
-        {
-            if (oValue is int || oValue is long)
-                return Convert.ToInt64(oValue) > 0;
-            if (oValue is string)
-                return StandardExtensions.IsTrue(oValue.ToString());
-            if (oValue is bool)
-                return (bool)oValue;
-
-            return false;
-        }
-
+    public static class IpDataExtensions
+    {   
         /// <summary>
         /// Gets a value from a data reader and converts the type to the specified generic type
         /// </summary>
@@ -65,16 +28,20 @@ namespace Ip.Sdk.Commons.Extensions
                     var oValue = reader[columnName];
 
                     if (oValue != DBNull.Value)
+                    {
                         value = oValue.ChangeType<T>();
+                    }
                 }
 
                 //If the Type is nullable and is null, but we don't want to allow nulls, then throw an exception
-                if (!allowNull && StandardExtensions.IsNullableValueType<T>() && Equals(value, default(T)))
-                    throw new Exception("Value cannot be null, if this error is invalid, please change the allowNull to true when calling the method");
+                if (!allowNull && IpStandardExtensions.IsNullableValueType<T>() && Equals(value, default(T)))
+                {
+                    throw new IpDataExtensionException("Value cannot be null, if this error is invalid, please change the allowNull to true when calling the method");
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("GetReaderValue() failed for columnName: {0}, type: {1}", columnName, typeof(T)), ex);
+                throw new IpDataExtensionException(string.Format("GetReaderValue() failed for columnName: {0}, type: {1}", columnName, typeof(T)), ex);
             }
 
             return value;
@@ -100,16 +67,20 @@ namespace Ip.Sdk.Commons.Extensions
                     var oValue = reader[columnName];
 
                     if (oValue != DBNull.Value)
+                    {
                         value = oValue.ChangeType<T>();
+                    }
                 }
 
                 //If the Type is nullable and is null, but we don't want to allow nulls, then throw an exception
-                if (!allowNull && StandardExtensions.IsNullableValueType<T>() && Equals(value, default(T)))
-                    throw new Exception("Value cannot be null, if this error is invalid, please change the allowNull to true when calling the method");
+                if (!allowNull && IpStandardExtensions.IsNullableValueType<T>() && Equals(value, default(T)))
+                {
+                    throw new IpDataExtensionException("Value cannot be null, if this error is invalid, please change the allowNull to true when calling the method");
+                }
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("GetReaderValue() failed for columnName: {0}, type: {1}", columnName, typeof(T)), ex);
+                throw new IpDataExtensionException(string.Format("GetReaderValue() failed for columnName: {0}, type: {1}", columnName, typeof(T)), ex);
             }
 
             return value;
@@ -151,6 +122,7 @@ namespace Ip.Sdk.Commons.Extensions
         /// <returns>A Byte Array</returns>
         public static byte[] GetReaderBytes(this IDataRecord reader, string columnName)
         {
+            //TODO: This needs serious fixing
             try
             {
                 if (DoesColumnExist(reader, columnName))
@@ -158,7 +130,9 @@ namespace Ip.Sdk.Commons.Extensions
                     var oValue = reader[columnName];
 
                     if (oValue == DBNull.Value)
+                    {
                         return null;
+                    }
 
                     using (var stream = new MemoryStream())
                     {
@@ -170,7 +144,7 @@ namespace Ip.Sdk.Commons.Extensions
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("GetReaderValue() failed for columnName: {0}", columnName), ex);
+                throw new IpDataExtensionException(string.Format("GetReaderValue() failed for columnName: {0}", columnName), ex);
             }
 
             return null;
@@ -184,6 +158,7 @@ namespace Ip.Sdk.Commons.Extensions
         /// <returns>A Byte Array</returns>
         public static byte[] GetReaderBytes(this IDataReader reader, string columnName)
         {
+            //TODO: This needs serious fixing
             try
             {
                 if (DoesColumnExist(reader, columnName))
@@ -191,7 +166,9 @@ namespace Ip.Sdk.Commons.Extensions
                     var oValue = reader[columnName];
 
                     if (oValue == DBNull.Value)
+                    {
                         return null;
+                    }
 
                     using (var stream = new MemoryStream())
                     {
@@ -203,7 +180,7 @@ namespace Ip.Sdk.Commons.Extensions
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("GetReaderValue() failed for columnName: {0}", columnName), ex);
+                throw new IpDataExtensionException(string.Format("GetReaderValue() failed for columnName: {0}", columnName), ex);
             }
 
             return null;
@@ -222,68 +199,16 @@ namespace Ip.Sdk.Commons.Extensions
 
             //If the type is null, return the specified default
             if (type == null)
-                return defaultType;
-
-            if (type.Name.Equals("MySqlDateTime", StringComparison.OrdinalIgnoreCase))
-                return typeof(DateTime);
-
-            return type;
-        }
-
-        /// <summary>
-        /// Replace quotes with double quotes
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static string FixSqlQuotes(this string value)
-        {
-            return value.Replace("'", "''");
-        }
-
-        /// <summary>
-        /// Takes a string and escapes special MySql characters
-        /// </summary>
-        /// <param name="value">The string to escape</param>
-        /// <returns>An escaped string</returns>
-        public static string ToEscapedMySqlString(this string value)
-        {
-            var result = string.Empty;
-
-            foreach (var c in value)
             {
-                switch (c)
-                {
-                    case '\"':
-                    case '\\':
-                    case '%':
-                    case '_':
-                    case '\'':
-                        result = string.Format("{0}\\{1}", result, c);
-                        break;
-
-                    case '\n':
-                        result = string.Format("{0}\\n", result);
-                        break;
-
-                    case '\r':
-                        result = string.Format("{0}\\r", result);
-                        break;
-
-                    case '\b':
-                        result = string.Format("{0}\\b", result);
-                        break;
-
-                    case '\t':
-                        result = string.Format("{0}\\t", result);
-                        break;
-
-                    default:
-                        result = string.Format("{0}{1}", result, c);
-                        break;
-                }
+                return defaultType;
             }
 
-            return result;
+            if (type.Name.Equals("MySqlDateTime", StringComparison.OrdinalIgnoreCase))
+            {
+                return typeof(DateTime);
+            }
+
+            return type;
         }
 
         #region Helpers

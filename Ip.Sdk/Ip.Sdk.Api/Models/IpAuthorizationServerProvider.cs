@@ -4,7 +4,7 @@ using Microsoft.Owin.Security.OAuth;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Ip.Sdk.Security.Api.Models
+namespace Ip.Sdk.Api.Models
 {
     public class IpAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {

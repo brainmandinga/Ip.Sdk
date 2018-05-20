@@ -2,19 +2,19 @@
 
 namespace Ip.Sdk.ErrorHandling.CustomExceptions
 {
-    public class IpSecurityException : IpBaseException
+    public class IpDatabaseTypeException : IpBaseException
     {
         /// <summary>
         /// Custom exception
         /// </summary>
-        public IpSecurityException()
-            : base("An unknown error occured with the security system") { }
+        public IpDatabaseTypeException()
+            : base("An unknown error occured with the database types") { }
 
         /// <summary>
         /// Custom exception with custom message
         /// </summary>
         /// <param name="message">The Custom Message</param>
-        public IpSecurityException(string message)
+        public IpDatabaseTypeException(string message)
             : base(message) { }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Ip.Sdk.ErrorHandling.CustomExceptions
         /// </summary>
         /// <param name="message">The Custom Message</param>
         /// <param name="innerException">The Inner Exception</param>
-        public IpSecurityException(string message, Exception innerException)
+        public IpDatabaseTypeException(string message, Exception innerException)
             : base(message, innerException) { }
     }
 }

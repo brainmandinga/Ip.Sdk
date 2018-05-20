@@ -1,6 +1,6 @@
 ﻿using Ip.Sdk.Security.Interfaces;
 
-namespace Ip.Sdk.Security.Api.Models
+namespace Ip.Sdk.Api.Models
 {
     public class IpAuth : IIpAuth
     {

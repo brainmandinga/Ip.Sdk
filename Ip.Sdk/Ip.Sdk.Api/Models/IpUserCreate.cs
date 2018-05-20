@@ -4,7 +4,7 @@ using Ip.Sdk.Security.AuthObjects;
 using Ip.Sdk.Security.Interfaces;
 using System.Threading.Tasks;
 
-namespace Ip.Sdk.Security.Api.Models
+namespace Ip.Sdk.Api.Models
 {
     public class IpUserCreate: IpUser, IIpUserCreate
     {

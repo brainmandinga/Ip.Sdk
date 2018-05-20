@@ -3,7 +3,7 @@ using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin.Security.OAuth;
 using System;
 
-namespace Ip.Sdk.Security.Api.Models
+namespace Ip.Sdk.Api.Models
 {
     public class IpSecurityPolicy : IIpSecurityPolicy
     {

@@ -1,4 +1,4 @@
-﻿using Ip.Sdk.Security.Api.Models;
+﻿using Ip.Sdk.Api.Models;
 using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
@@ -6,8 +6,8 @@ using Owin;
 using System;
 using System.Web.Http;
 
-[assembly: OwinStartup(typeof(Ip.Sdk.Security.Api.Startup))]
-namespace Ip.Sdk.Security.Api
+[assembly: OwinStartup(typeof(Ip.Sdk.Api.Startup))]
+namespace Ip.Sdk.Api
 {
     public class Startup
     {

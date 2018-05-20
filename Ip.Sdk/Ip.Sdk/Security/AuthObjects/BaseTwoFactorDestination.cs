@@ -31,7 +31,7 @@ namespace Ip.Sdk.Security.AuthObjects
         public virtual void SetDestination(string destinationValue)
         {
             if (!Regex.Match(destinationValue, DestinationRegex, RegexOptions.IgnoreCase).Success)
-                throw new TwoFactorValueException(string.Format("Value: {0} didn't match the regex: {1}", destinationValue, DestinationRegex));
+                throw new IpTwoFactorValueException(string.Format("Value: {0} didn't match the regex: {1}", destinationValue, DestinationRegex));
 
             TwoFactorMessageDestination = destinationValue;
         }
