@@ -1,4 +1,4 @@
-﻿using Ip.Sdk.Commons.Enumerations;
+﻿using Ip.Sdk.Api.Enumerations;
 using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin.Security.OAuth;
 using System.Security.Claims;
@@ -41,7 +41,7 @@ namespace Ip.Sdk.Api.Models
 
             var result = await user.AuthenticateAsync(context.UserName, context.Password);
 
-            if (result.Status != AuthenticationStatus.Success)
+            if (result.Status != (int)AuthenticationStatus.Success)
             {
                 context.SetError("invalid_grant", "The username or password is incorrect");
                 return;

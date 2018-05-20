@@ -1,5 +1,5 @@
-﻿using Ip.Sdk.Commons.Enumerations;
-using Ip.Sdk.ErrorHandling.CustomExceptions;
+﻿using Ip.Sdk.ErrorHandling.CustomExceptions;
+using Ip.Sdk.Security.Interfaces;
 using System.Text.RegularExpressions;
 
 namespace Ip.Sdk.Security.AuthObjects
@@ -7,17 +7,12 @@ namespace Ip.Sdk.Security.AuthObjects
     /// <summary>
     /// Abstract class describing a base two factor authentication object
     /// </summary>
-    public abstract class BaseTwoFactorDestination
+    public abstract class IpBaseTwoFactorDestination : IIpBaseTwoFactorDestination
     {
-        /// <summary>
-        /// The type of two factor authentication to use
-        /// </summary>
-        public abstract TwoFactorMethod TwoFactorType { get; }
-
         /// <summary>
         /// A regex for the type of two factor authentication that's being used
         /// </summary>
-        public abstract string DestinationRegex { get; }
+        public string DestinationRegex { get; }
 
         /// <summary>
         /// The message destination used for two factor authentication
@@ -35,5 +30,12 @@ namespace Ip.Sdk.Security.AuthObjects
 
             TwoFactorMessageDestination = destinationValue;
         }
+
+        /// <summary>
+        /// Sends the two factor message
+        /// </summary>
+        /// <param name="subject">The subject of the message</param>
+        /// <param name="message">The message</param>
+        public abstract void SendMessage(string subject, string message);
     }
 }

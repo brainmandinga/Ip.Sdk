@@ -1,4 +1,4 @@
-﻿using Ip.Sdk.Commons.Enumerations;
+﻿using Ip.Sdk.Api.Enumerations;
 using Ip.Sdk.Commons.Extensions;
 using Ip.Sdk.Security.AuthObjects;
 using Ip.Sdk.Security.Interfaces;
@@ -26,22 +26,22 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
         /// <returns>A response based on the creation</returns>
-        public virtual IpResponse<IpUserEditStatus> Create(IIpUserCreate user)
+        public virtual IIpResponse Create(IIpUserCreate user)
         {
             var validPassword = ValidatePassword(user.Password, user.ConfirmPassword);
             var validUser = ValidateUser(user);
 
             if (validPassword != PasswordEditStatus.Success)
             {
-                return new IpResponse<IpUserEditStatus> { Status = IpUserEditStatus.PasswordInvalid, ResponseMessage = validPassword.ToDescription() };
+                return new IpResponse { Status = (int)IpUserEditStatus.PasswordInvalid, ResponseMessage = validPassword.ToDescription() };
             }
 
             if (validUser != IpUserEditStatus.Success)
             {
-                return new IpResponse<IpUserEditStatus> { Status = validUser, ResponseMessage = validUser.ToDescription() };
+                return new IpResponse { Status = (int)validUser, ResponseMessage = validUser.ToDescription() };
             }
 
-            return new IpResponse<IpUserEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
         /// <returns>A response based on the creation</returns>
-        public async virtual Task<IpResponse<IpUserEditStatus>> CreateAsync(IIpUserCreate user)
+        public async virtual Task<IIpResponse> CreateAsync(IIpUserCreate user)
         {
             return await Task.Run(() => Create(user));
         }

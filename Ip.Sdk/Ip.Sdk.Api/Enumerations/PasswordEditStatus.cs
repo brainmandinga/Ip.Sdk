@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Ip.Sdk.Commons.Enumerations
+namespace Ip.Sdk.Api.Enumerations
 {
     /// <summary>
     /// Statuses for Password Edits

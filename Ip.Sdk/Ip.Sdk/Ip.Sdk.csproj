@@ -97,10 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commons\Configuration\ConfigurationHelper.cs" />
-    <Compile Include="Commons\Enumerations\AuthenticationStatus.cs" />
-    <Compile Include="Commons\Enumerations\IpUserEditStatus.cs" />
-    <Compile Include="Commons\Enumerations\PasswordEditStatus.cs" />
-    <Compile Include="Commons\Enumerations\TwoFactorMethod.cs" />
     <Compile Include="Commons\Extensions\IpDataExtensions.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseDataLayer.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseParameter.cs" />
@@ -137,16 +133,21 @@
     <Compile Include="Logging\IpFileLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthObjects\IpResponse.cs" />
-    <Compile Include="Security\AuthObjects\BaseTwoFactorDestination.cs" />
-    <Compile Include="Security\AuthObjects\EmailTwoFactorDestination.cs" />
-    <Compile Include="Security\AuthObjects\SmsTwoFactorDestination.cs" />
-    <Compile Include="Security\AuthObjects\TelephoneTwoFactorDestination.cs" />
-    <Compile Include="Security\Factories\TwoFactorFactory.cs" />
+    <Compile Include="Security\AuthObjects\IpBaseTwoFactorDestination.cs" />
+    <Compile Include="Security\AuthObjects\IpEmailTwoFactorDestination.cs" />
+    <Compile Include="Security\AuthObjects\IpSmsTwoFactorDestination.cs" />
+    <Compile Include="Security\AuthObjects\IpTelephoneTwoFactorDestination.cs" />
+    <Compile Include="Security\Factories\IpTwoFactorFactory.cs" />
     <Compile Include="Security\Interfaces\IIpAuth.cs" />
+    <Compile Include="Security\Interfaces\IIpBaseTwoFactorDestination.cs" />
     <Compile Include="Security\Interfaces\IIpClaim.cs" />
+    <Compile Include="Security\Interfaces\IIpEmailTwoFactorDestination.cs" />
+    <Compile Include="Security\Interfaces\IIpResponse.cs" />
     <Compile Include="Security\Interfaces\IIpRole.cs" />
     <Compile Include="Security\Interfaces\IIpSecurityPolicy.cs" />
     <Compile Include="Security\Interfaces\IIpSecurityQuestion.cs" />
+    <Compile Include="Security\Interfaces\IIpSmsTwoFactorDestination.cs" />
+    <Compile Include="Security\Interfaces\IIpTelephoneTwoFactorDestination.cs" />
     <Compile Include="Security\Interfaces\IIpUser.cs" />
     <Compile Include="Security\Interfaces\IIpUserCreate.cs" />
     <Compile Include="Security\Interfaces\IIpPasswordReset.cs" />

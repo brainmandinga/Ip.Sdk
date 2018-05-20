@@ -1,6 +1,4 @@
-﻿using Ip.Sdk.Commons.Enumerations;
-using Ip.Sdk.Security.AuthObjects;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Ip.Sdk.Security.Interfaces
 {
@@ -24,13 +22,13 @@ namespace Ip.Sdk.Security.Interfaces
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
         /// <returns>A response based on the creation</returns>
-        IpResponse<IpUserEditStatus> Create(IIpUserCreate user);
+        IIpResponse Create(IIpUserCreate user);
 
         /// <summary>
         /// Creates a new user
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
         /// <returns>A response based on the creation</returns>
-        Task<IpResponse<IpUserEditStatus>> CreateAsync(IIpUserCreate user);
+        Task<IIpResponse> CreateAsync(IIpUserCreate user);
     }
 }

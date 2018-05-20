@@ -1,4 +1,4 @@
-﻿using Ip.Sdk.Commons.Enumerations;
+﻿using Ip.Sdk.Api.Enumerations;
 using Ip.Sdk.Commons.Extensions;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using Ip.Sdk.Security.AuthObjects;
@@ -101,7 +101,7 @@ namespace Ip.Sdk.Api.Models
         /// <summary>
         /// The two factor destination object
         /// </summary>
-        public BaseTwoFactorDestination TwoFactorDestination { get; set; }
+        public IpBaseTwoFactorDestination TwoFactorDestination { get; set; }
 
         /// <summary>
         /// The security policy applied to the user
@@ -242,9 +242,9 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="password">The password to authenticate</param>
         /// <returns>A response based on the authentication results</returns>
-        public virtual IpResponse<AuthenticationStatus> Authenticate(string password)
+        public virtual IIpResponse Authenticate(string password)
         {
-            return new IpResponse<AuthenticationStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="password">The password to authenticate</param>
         /// <returns>A response based on the authentication results</returns>
-        public async virtual Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string password)
+        public async virtual Task<IIpResponse> AuthenticateAsync(string password)
         {
             return await Task.Run(() => Authenticate(password));
         }
@@ -263,9 +263,9 @@ namespace Ip.Sdk.Api.Models
         /// <param name="username">The username of the user</param>
         /// <param name="password">The password to authenticate</param>
         /// <returns>A response based on the authentication results</returns>
-        public virtual IpResponse<AuthenticationStatus> Authenticate(string username, string password)
+        public virtual IIpResponse Authenticate(string username, string password)
         {
-            return new IpResponse<AuthenticationStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Ip.Sdk.Api.Models
         /// <param name="username">The username of the user</param>
         /// <param name="password">The password to authenticate</param>
         /// <returns>A response based on the authentication results</returns>
-        public async virtual Task<IpResponse<AuthenticationStatus>> AuthenticateAsync(string username, string password)
+        public async virtual Task<IIpResponse> AuthenticateAsync(string username, string password)
         {
             return await Task.Run(() => Authenticate(username, password));
         }
@@ -284,16 +284,16 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="user">The IIpUser object to update</param>
         /// <returns>A response based on the update</returns>
-        public virtual IpResponse<IpUserEditStatus> Update(IIpUser user)
+        public virtual IIpResponse Update(IIpUser user)
         {
             var validUser = ValidateUser(user);
 
             if (validUser != IpUserEditStatus.Success)
             {
-                return new IpResponse<IpUserEditStatus> { Status = validUser, ResponseMessage = validUser.ToDescription() };
+                return new IpResponse { Status = (int)validUser, ResponseMessage = validUser.ToDescription() };
             }
 
-            return new IpResponse<IpUserEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="user">The IIpUser object to update</param>
         /// <returns>A response based on the update</returns>
-        public async virtual Task<IpResponse<IpUserEditStatus>> UpdateAsync(IIpUser user)
+        public async virtual Task<IIpResponse> UpdateAsync(IIpUser user)
         {
             return await Task.Run(() => Update(user));
         }
@@ -310,16 +310,16 @@ namespace Ip.Sdk.Api.Models
         /// Deletes a user by their Id
         /// </summary>
         /// <returns>A response based on the deletion</returns>
-        public virtual IpResponse<IpUserEditStatus> Delete()
+        public virtual IIpResponse Delete()
         {
-            return new IpResponse<IpUserEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
         /// Deletes a user by their Id
         /// </summary>
         /// <returns>A response based on the deletion</returns>
-        public async virtual Task<IpResponse<IpUserEditStatus>> DeleteAsync()
+        public async virtual Task<IIpResponse> DeleteAsync()
         {
             return await Task.Run(() => Delete());
         }
@@ -330,16 +330,16 @@ namespace Ip.Sdk.Api.Models
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the change of password</returns>
-        public virtual IpResponse<PasswordEditStatus> ChangePassword(string password, string confirmPassword)
+        public virtual IIpResponse ChangePassword(string password, string confirmPassword)
         {
             var validPassword = ValidatePassword(password, confirmPassword);
 
             if (validPassword != PasswordEditStatus.Success)
             {
-                return new IpResponse<PasswordEditStatus> { Status = validPassword, ResponseMessage = validPassword.ToDescription() };
+                return new IpResponse { Status = (int)validPassword, ResponseMessage = validPassword.ToDescription() };
             }
 
-            return new IpResponse<PasswordEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Ip.Sdk.Api.Models
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the change of password</returns>
-        public async virtual Task<IpResponse<PasswordEditStatus>> ChangePasswordAsync(string password, string confirmPassword)
+        public async virtual Task<IIpResponse> ChangePasswordAsync(string password, string confirmPassword)
         {
             return await Task.Run(() => ChangePassword(password, confirmPassword));
         }
@@ -357,16 +357,16 @@ namespace Ip.Sdk.Api.Models
         /// Triggers the reset password process
         /// </summary>
         /// <returns>A response based on the password reset</returns>
-        public virtual IpResponse<PasswordEditStatus> ResetPassword()
+        public virtual IIpResponse ResetPassword()
         {
-            return new IpResponse<PasswordEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
         /// Triggers the reset password process
         /// </summary>
         /// <returns>A response based on the password reset</returns>
-        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync()
+        public async virtual Task<IIpResponse> ResetPasswordAsync()
         {
             return await Task.Run(() => ResetPassword());
         }
@@ -377,16 +377,16 @@ namespace Ip.Sdk.Api.Models
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the password reset</returns>
-        public virtual IpResponse<PasswordEditStatus> ResetPassword(string password, string confirmPassword)
+        public virtual IIpResponse ResetPassword(string password, string confirmPassword)
         {
             var validPassword = ValidatePassword(password, confirmPassword);
 
             if (validPassword != PasswordEditStatus.Success)
             {
-                return new IpResponse<PasswordEditStatus> { Status = validPassword, ResponseMessage = validPassword.ToDescription() };
+                return new IpResponse { Status = (int)validPassword, ResponseMessage = validPassword.ToDescription() };
             }
 
-            return new IpResponse<PasswordEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Ip.Sdk.Api.Models
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the password reset</returns>
-        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(string password, string confirmPassword)
+        public async virtual Task<IIpResponse> ResetPasswordAsync(string password, string confirmPassword)
         {
             return await Task.Run(() => ResetPassword(password, confirmPassword));
         }
@@ -405,16 +405,16 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="securityAnswers">The security questions and answers collection</param>
         /// <returns>A response based on the password reset</returns>
-        public virtual IpResponse<PasswordEditStatus> ResetPassword(IList<IIpSecurityQuestion> securityAnswers)
+        public virtual IIpResponse ResetPassword(IList<IIpSecurityQuestion> securityAnswers)
         {
             var validQuestions = ValidateSecurityQuestions(securityAnswers);
 
             if (validQuestions != PasswordEditStatus.Success)
             {
-                return new IpResponse<PasswordEditStatus> { Status = validQuestions, ResponseMessage = validQuestions.ToDescription() };
+                return new IpResponse { Status = (int)validQuestions, ResponseMessage = validQuestions.ToDescription() };
             }
 
-            return new IpResponse<PasswordEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="securityAnswers">The security questions and answers collection</param>
         /// <returns>A response based on the password reset</returns>
-        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(IList<IIpSecurityQuestion> securityAnswers)
+        public async virtual Task<IIpResponse> ResetPasswordAsync(IList<IIpSecurityQuestion> securityAnswers)
         {
             return await Task.Run(() => ResetPassword(securityAnswers));
         }
@@ -434,22 +434,22 @@ namespace Ip.Sdk.Api.Models
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <param name="securityAnswers">The security questions and answers collection</param>
         /// <returns>A response based on the password reset</returns>
-        public virtual IpResponse<PasswordEditStatus> ResetPassword(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers)
+        public virtual IIpResponse ResetPassword(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers)
         {
             var validPassword = ValidatePassword(password, confirmPassword);
             var validQuestions = ValidateSecurityQuestions(securityAnswers);
 
             if (validPassword != PasswordEditStatus.Success)
             {
-                return new IpResponse<PasswordEditStatus> { Status = validPassword, ResponseMessage = validPassword.ToDescription() };
+                return new IpResponse { Status = (int)validPassword, ResponseMessage = validPassword.ToDescription() };
             }
 
             if (validQuestions != PasswordEditStatus.Success)
             {
-                return new IpResponse<PasswordEditStatus> { Status = validQuestions, ResponseMessage = validQuestions.ToDescription() };
+                return new IpResponse { Status = (int)validQuestions, ResponseMessage = validQuestions.ToDescription() };
             }
 
-            return new IpResponse<PasswordEditStatus>();
+            return new IpResponse();
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Ip.Sdk.Api.Models
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <param name="securityAnswers">The security questions and answers collection</param>
         /// <returns>A response based on the password reset</returns>
-        public async virtual Task<IpResponse<PasswordEditStatus>> ResetPasswordAsync(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers)
+        public async virtual Task<IIpResponse> ResetPasswordAsync(string password, string confirmPassword, IList<IIpSecurityQuestion> securityAnswers)
         {
             return await Task.Run(() => ResetPassword(password, confirmPassword, securityAnswers));
         }
