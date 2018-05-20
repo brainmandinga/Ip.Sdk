@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers
 {
+    /// <summary>
+    /// Microsoft SQL Server Data Layer
+    /// </summary>
     public class IpMsSqlDataLayer : IpBaseDataLayer
     {
         /// <summary>

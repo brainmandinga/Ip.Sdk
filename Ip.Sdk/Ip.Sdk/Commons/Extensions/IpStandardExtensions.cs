@@ -2,17 +2,20 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace Ip.Sdk.Commons.Extensions
 {
+    /// <summary>
+    /// Standard Extensions
+    /// </summary>
     public static class IpStandardExtensions
     {
         /// <summary>
         /// Returns a concatenated string of the exception details
         /// </summary>
         /// <param name="ex">The Exception</param>
+        /// <param name="message">The message that's being added</param>
         /// <returns></returns>
         public static string FullExceptionMsg(this Exception ex, string message = null)
         {

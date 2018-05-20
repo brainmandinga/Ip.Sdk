@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace Ip.Sdk.Security.Interfaces
 {
+    /// <summary>
+    /// Create User model
+    /// </summary>
     public interface IIpUserCreate : IIpUser
     {
         /// <summary>
@@ -20,8 +23,6 @@ namespace Ip.Sdk.Security.Interfaces
         /// Creates a new user
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
-        /// <param name="password">The password the user wants</param>
-        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the creation</returns>
         IpResponse<IpUserEditStatus> Create(IIpUserCreate user);
 
@@ -29,8 +30,6 @@ namespace Ip.Sdk.Security.Interfaces
         /// Creates a new user
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
-        /// <param name="password">The password the user wants</param>
-        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the creation</returns>
         Task<IpResponse<IpUserEditStatus>> CreateAsync(IIpUserCreate user);
     }

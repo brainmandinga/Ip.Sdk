@@ -5,6 +5,9 @@ using System;
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
 {
+    /// <summary>
+    /// Factory for handling data access
+    /// </summary>
     public class IpDataAccessFactory
     {
         /// <summary>

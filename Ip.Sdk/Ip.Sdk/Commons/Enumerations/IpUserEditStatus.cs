@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Commons.Enumerations
 {
+    /// <summary>
+    /// User Edit status 
+    /// </summary>
     public enum IpUserEditStatus
     {
         /// <summary>

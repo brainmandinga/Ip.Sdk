@@ -7,10 +7,16 @@ using System.Data.SqlClient;
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
 {
+    /// <summary>
+    /// Factory for db params
+    /// </summary>
     public class IpDataParameterFactory
     {
         private IList<IDbDataParameter> _parameters;
 
+        /// <summary>
+        /// The collection of IDbDataParameters
+        /// </summary>
         public IList<IDbDataParameter> Parameters
         {
             get { return _parameters = (_parameters ?? new List<IDbDataParameter>()); }

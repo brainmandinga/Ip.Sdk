@@ -18,6 +18,9 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers
     /// <typeparam name="T">The Type of Object to return</typeparam>
     public delegate T BuildDataObject<out T>(IDataRecord record);
 
+    /// <summary>
+    /// Base class as an abstract for the data layers
+    /// </summary>
     public abstract class IpBaseDataLayer
     {
         /// <summary>

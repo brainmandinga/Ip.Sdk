@@ -6,6 +6,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Ip.Sdk.Commons.Extensions
 {
+    /// <summary>
+    /// Data Extensions
+    /// </summary>
     public static class IpDataExtensions
     {   
         /// <summary>

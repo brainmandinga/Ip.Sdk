@@ -228,14 +228,12 @@ namespace Ip.Sdk.Security.Interfaces
         /// <summary>
         /// Deletes a user by their Id
         /// </summary>
-        /// <param name="id">The Id of the user</param>
         /// <returns>A response based on the deletion</returns>
         IpResponse<IpUserEditStatus> Delete();
 
         /// <summary>
         /// Deletes a user by their Id
         /// </summary>
-        /// <param name="id">The Id of the user</param>
         /// <returns>A response based on the deletion</returns>
         Task<IpResponse<IpUserEditStatus>> DeleteAsync();
 

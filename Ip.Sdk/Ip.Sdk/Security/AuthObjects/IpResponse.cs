@@ -1,5 +1,9 @@
 ﻿namespace Ip.Sdk.Security.AuthObjects
 {
+    /// <summary>
+    /// Generic Response Object
+    /// </summary>
+    /// <typeparam name="T">An Enumeration for the Status</typeparam>
     public class IpResponse<T>
     {
         /// <summary>

@@ -6,11 +6,17 @@ using System.Web.Http;
 
 namespace Ip.Sdk.Api.Controllers
 {
+    /// <summary>
+    /// The Controller for User functions
+    /// </summary>
     [RoutePrefix("api/user")]
     public class IpUserController : ApiController
     {
         private IIpUser _user;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public IpUserController()
         {
             _user = new IpUser();
@@ -20,6 +26,11 @@ namespace Ip.Sdk.Api.Controllers
         //TODO: Create reusable helpers for validation
         //TODO: Finalize implementations
 
+        /// <summary>
+        /// Registers a user
+        /// </summary>
+        /// <param name="user">The user object</param>
+        /// <returns>A message indicating the result</returns>
         [AllowAnonymous]
         [Route("register")]
         [HttpPost]
@@ -40,6 +51,11 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Requests a password reset
+        /// </summary>
+        /// <param name="id">The id of the user</param>
+        /// <returns>A message indicating the result</returns>
         [AllowAnonymous]
         [Route("resetpassword/{id:guid}/request")]
         [HttpPut]
@@ -57,6 +73,12 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Requests a password reset with security questions
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="passwordDetails">Password reset details</param>
+        /// <returns>A message indicating the result</returns>
         [AllowAnonymous]
         [Route("resetpassword/{id:guid}/request/withquestions")]
         [HttpPut]
@@ -74,6 +96,12 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Change the Password
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="passwordDetails">The password reset details</param>
+        /// <returns>A message indicating the result</returns>
         [AllowAnonymous]
         [Route("resetpassword/{id:guid}/change")]
         [HttpPut]
@@ -91,6 +119,12 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Change the password using security questions
+        /// </summary>
+        /// <param name="id">The Id</param>
+        /// <param name="passwordDetails">The password details</param>
+        /// <returns>A message indicating the result</returns>
         [AllowAnonymous]
         [Route("resetpassword/{id:guid}/change/withquestions")]
         [HttpPut]
@@ -108,6 +142,11 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Create a user
+        /// </summary>
+        /// <param name="user">The user object</param>
+        /// <returns>A message indicating the result</returns>
         [Authorize]
         [Route("")]
         [HttpPost]
@@ -128,6 +167,11 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Updates a user
+        /// </summary>
+        /// <param name="user">The user object</param>
+        /// <returns>A message indicating the result</returns>
         [Authorize]
         [Route("")]
         [HttpPut]
@@ -145,6 +189,11 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes a user by Id
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <returns>A message indicating the result</returns>
         [Authorize]
         [Route("{id:guid}")]
         [HttpDelete]
@@ -162,6 +211,11 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes a user by username
+        /// </summary>
+        /// <param name="username">The username</param>
+        /// <returns>A message indicating the result</returns>
         [Authorize]
         [Route("{username}")]
         [HttpDelete]
@@ -179,6 +233,11 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Deletes a user by email address
+        /// </summary>
+        /// <param name="email">The email address</param>
+        /// <returns>A message indicating the result</returns>
         [Authorize]
         [Route("{email}")]
         [HttpDelete]
@@ -196,6 +255,12 @@ namespace Ip.Sdk.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Changes the password
+        /// </summary>
+        /// <param name="id">The id</param>
+        /// <param name="passwordDetails">The password details</param>
+        /// <returns>A message indicating the result</returns>
         [Authorize]
         [Route("changepassword/{id:guid}")]
         [HttpPut]

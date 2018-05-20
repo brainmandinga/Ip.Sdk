@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// User object
+    /// </summary>
     public class IpUser : IIpUser
     {
         private IList<IIpRole> _roles;
@@ -306,7 +309,6 @@ namespace Ip.Sdk.Api.Models
         /// <summary>
         /// Deletes a user by their Id
         /// </summary>
-        /// <param name="id">The Id of the user</param>
         /// <returns>A response based on the deletion</returns>
         public virtual IpResponse<IpUserEditStatus> Delete()
         {
@@ -316,7 +318,6 @@ namespace Ip.Sdk.Api.Models
         /// <summary>
         /// Deletes a user by their Id
         /// </summary>
-        /// <param name="id">The Id of the user</param>
         /// <returns>A response based on the deletion</returns>
         public async virtual Task<IpResponse<IpUserEditStatus>> DeleteAsync()
         {
@@ -542,6 +543,11 @@ namespace Ip.Sdk.Api.Models
             return PasswordEditStatus.Success;
         }
 
+        /// <summary>
+        /// Checks that the user is valid
+        /// </summary>
+        /// <param name="user">The user</param>
+        /// <returns>A status object indicting success/fail</returns>
         protected virtual IpUserEditStatus ValidateUser(IIpUser user)
         {
             //TODO: Validate the email, username, etc...

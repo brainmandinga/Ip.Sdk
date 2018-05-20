@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// Password reset object
+    /// </summary>
     public class IpPasswordReset : IIpPasswordReset
     {
         private IList<IIpSecurityQuestion> _securityQuestions;

@@ -1,5 +1,8 @@
 ﻿namespace Ip.Sdk.Security.Interfaces
 {
+    /// <summary>
+    /// Authentication model
+    /// </summary>
     public interface IIpAuth
     {
         /// <summary>

@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Ip.Sdk.ErrorHandling
 {
+    /// <summary>
+    /// Object for serializing exceptions to JSON
+    /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
     public class SerializableException
     {

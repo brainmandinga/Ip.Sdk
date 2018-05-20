@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Security.Interfaces
 {
+    /// <summary>
+    /// Password reset model
+    /// </summary>
     public interface IIpPasswordReset
     {
         /// <summary>

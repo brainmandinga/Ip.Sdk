@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers
 {
+    /// <summary>
+    /// My SQL Data Layer
+    /// </summary>
     public class IpMySqlDataLayer : IpBaseDataLayer
     {
         /// <summary>

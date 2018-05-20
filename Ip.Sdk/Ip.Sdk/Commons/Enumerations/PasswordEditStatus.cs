@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Commons.Enumerations
 {
+    /// <summary>
+    /// Statuses for Password Edits
+    /// </summary>
     public enum PasswordEditStatus
     {
         /// <summary>

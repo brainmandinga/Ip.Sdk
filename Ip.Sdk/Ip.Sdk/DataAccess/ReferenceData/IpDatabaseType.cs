@@ -3,20 +3,36 @@ using System.Collections.Generic;
 
 namespace Ip.Sdk.DataAccess.ReferenceData
 {
+    /// <summary>
+    /// Handles working with the database types
+    /// </summary>
     public class IpDatabaseType
     {
         private Dictionary<string, string> _dbTypes;
         private Dictionary<string, string> _dbTypeProviders;
 
+        /// <summary>
+        /// My SQL Constant
+        /// </summary>
         public const string MYSQL = "MySql";
+
+        /// <summary>
+        /// MS SQL Constant
+        /// </summary>
         public const string MSSQL = "SqlServer";
 
+        /// <summary>
+        /// Dictionary lookups by type
+        /// </summary>
         public Dictionary<string, string> IpDbTypes
         {
             get { return _dbTypes = (_dbTypes ?? new Dictionary<string, string>()); }
             set { _dbTypes = value; }
         }
 
+        /// <summary>
+        /// Dictionary lookups by provider
+        /// </summary>
         public Dictionary<string, string> IpDbTypeProviders
         {
             get { return _dbTypeProviders = (_dbTypeProviders ?? new Dictionary<string, string>()); }

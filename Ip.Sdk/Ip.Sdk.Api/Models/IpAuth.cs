@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// Auth object
+    /// </summary>
     public class IpAuth : IIpAuth
     {
         /// <summary>

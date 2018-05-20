@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// Claim object
+    /// </summary>
     public class IpClaim : IIpClaim
     {
         /// <summary>

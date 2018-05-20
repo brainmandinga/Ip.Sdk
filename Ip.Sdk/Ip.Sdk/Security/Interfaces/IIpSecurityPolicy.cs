@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Security.Interfaces
 {
+    /// <summary>
+    /// Security Policy model
+    /// </summary>
     public interface IIpSecurityPolicy
     {
         /// <summary>

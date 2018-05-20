@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// Overriden Service Provider for Auth
+    /// </summary>
     public class IpAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
+        /// <summary>
+        /// Overrides the base method to validate the client
+        /// </summary>
+        /// <param name="context">The auth context</param>
+        /// <returns>If the client is valid</returns>
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
             context.TryGetFormCredentials(out string clientId, out string clientSecret);
@@ -20,6 +28,11 @@ namespace Ip.Sdk.Api.Models
             }
         }
 
+        /// <summary>
+        /// Overrides the base method to authenticate the client
+        /// </summary>
+        /// <param name="context">The auth context</param>
+        /// <returns>If the client is authenticated and their claims</returns>
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });

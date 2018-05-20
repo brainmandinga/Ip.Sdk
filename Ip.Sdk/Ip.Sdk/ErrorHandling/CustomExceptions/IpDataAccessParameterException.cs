@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.ErrorHandling.CustomExceptions
 {
+    /// <summary>
+    /// Custom Exception
+    /// </summary>
     public class IpDataAccessParameterException : IpBaseException
     {
         /// <summary>

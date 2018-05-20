@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// User create object
+    /// </summary>
     public class IpUserCreate: IpUser, IIpUserCreate
     {
         /// <summary>
@@ -45,8 +48,6 @@ namespace Ip.Sdk.Api.Models
         /// Creates a new user
         /// </summary>
         /// <param name="user">The IIpUser object to create</param>
-        /// <param name="password">The password the user wants</param>
-        /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A response based on the creation</returns>
         public async virtual Task<IpResponse<IpUserEditStatus>> CreateAsync(IIpUserCreate user)
         {

@@ -5,6 +5,9 @@ using System;
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// Security policy object
+    /// </summary>
     public class IpSecurityPolicy : IIpSecurityPolicy
     {
         /// <summary>

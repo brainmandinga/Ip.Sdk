@@ -2,6 +2,9 @@
 
 namespace Ip.Sdk.Api.Models
 {
+    /// <summary>
+    /// Role Object
+    /// </summary>
     public class IpRole : IIpRole
     {
         /// <summary>
