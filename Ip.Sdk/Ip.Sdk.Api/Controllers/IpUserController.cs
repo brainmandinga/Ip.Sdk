@@ -26,6 +26,8 @@ namespace Ip.Sdk.Api.Controllers
         public async Task<IHttpActionResult> Register([FromBody] IIpUserCreate user)
         {
             var createUser = new IpUserCreate();
+
+            //TODO: this should not only check for username, but also email
             var usr = await _user.GetByUsernameAsync(user.Username);
 
             if (usr != null)
@@ -112,6 +114,8 @@ namespace Ip.Sdk.Api.Controllers
         public async Task<IHttpActionResult> Create([FromBody] IIpUserCreate user)
         {
             var createUser = new IpUserCreate();
+
+            //TODO: this should not only check for username, but also email
             var usr = await _user.GetByUsernameAsync(user.Username);
 
             if (usr != null)
