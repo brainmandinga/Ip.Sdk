@@ -25,7 +25,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             }
             #endregion
 
-            var connString = ConfigurationHelper.GetConnectionString(connectionStringName);
+            var connString = IpConfigurationHelper.GetConnectionString(connectionStringName);
             return GetDataLayerByProvider(connString.ConnectionString, connString.ProviderName, useDefault);
         }
 
@@ -40,7 +40,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         {         
             if (string.IsNullOrWhiteSpace(providerName) && useDefault)
             {
-                var defaultProvider = ConfigurationHelper.GetSystemSetting<string>("DefaultDatabaseProvider");
+                var defaultProvider = IpConfigurationHelper.GetSystemSetting<string>("DefaultDatabaseProvider");
                 providerName = defaultProvider;
             }
 

@@ -7,7 +7,7 @@ namespace Ip.Sdk.Commons.Configuration
     /// <summary>
     /// Configuration Helper class
     /// </summary>
-    public static class ConfigurationHelper
+    public static class IpConfigurationHelper
     {
         //TODO: Build a factory and abstraction around the configuration elements to allow one to configure and get settings from multiple sources. web/app.config, file system, database, and code
         //TODO: Make extensible so more could be added

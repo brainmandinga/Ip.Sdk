@@ -93,7 +93,7 @@ namespace Ip.Sdk.Api.Models
         public virtual void LoadDefaultSecurityPolicy()
         {
             //TODO: When the Configuration Helper has been refactored to be more abstract, this will need to change.
-            var providerFullyQualifiedType = ConfigurationHelper.GetSystemSetting<string>("AuthProvider");
+            var providerFullyQualifiedType = IpConfigurationHelper.GetSystemSetting<string>("AuthProvider");
 
             try
             {
@@ -107,18 +107,18 @@ namespace Ip.Sdk.Api.Models
             }
 
             //Load values from configuration
-            PasswordComplexityRegex = ConfigurationHelper.GetSystemSetting<string>("PasswordComplexityRegex");
-            AuthenticationEndpoint = ConfigurationHelper.GetSystemSetting<string>("AuthenticationEndpoint");
-            MinimumPasswordLength = ConfigurationHelper.GetSystemSetting<int>("MinimumPasswordLength");
-            MaximumPasswordLength = ConfigurationHelper.GetSystemSetting<int>("MaximumPasswordLength");
-            PasswordExpirationInDays = ConfigurationHelper.GetSystemSetting<int>("PasswordExpirationInDays");
-            AuthTokenExpirationMinutes = ConfigurationHelper.GetSystemSetting<int>("AuthTokenExpirationMinutes");
-            LockoutAttemptCount = ConfigurationHelper.GetSystemSetting<int>("LockoutAttemptCount");
-            RequireRegistrationConfirmation = ConfigurationHelper.GetSystemSetting<bool>("RequireRegistrationConfirmation");
-            UseTwoFactorAuthentication = ConfigurationHelper.GetSystemSetting<bool>("UseTwoFactorAuthentication");
-            UseSecurityQuestions = ConfigurationHelper.GetSystemSetting<bool>("UseSecurityQuestions");
-            AllowInsecureHttp = ConfigurationHelper.GetSystemSetting<bool>("AllowInsecureHttp");
-            AllowCors = ConfigurationHelper.GetSystemSetting<bool>("AllowCors");
+            PasswordComplexityRegex = IpConfigurationHelper.GetSystemSetting<string>("PasswordComplexityRegex");
+            AuthenticationEndpoint = IpConfigurationHelper.GetSystemSetting<string>("AuthenticationEndpoint");
+            MinimumPasswordLength = IpConfigurationHelper.GetSystemSetting<int>("MinimumPasswordLength");
+            MaximumPasswordLength = IpConfigurationHelper.GetSystemSetting<int>("MaximumPasswordLength");
+            PasswordExpirationInDays = IpConfigurationHelper.GetSystemSetting<int>("PasswordExpirationInDays");
+            AuthTokenExpirationMinutes = IpConfigurationHelper.GetSystemSetting<int>("AuthTokenExpirationMinutes");
+            LockoutAttemptCount = IpConfigurationHelper.GetSystemSetting<int>("LockoutAttemptCount");
+            RequireRegistrationConfirmation = IpConfigurationHelper.GetSystemSetting<bool>("RequireRegistrationConfirmation");
+            UseTwoFactorAuthentication = IpConfigurationHelper.GetSystemSetting<bool>("UseTwoFactorAuthentication");
+            UseSecurityQuestions = IpConfigurationHelper.GetSystemSetting<bool>("UseSecurityQuestions");
+            AllowInsecureHttp = IpConfigurationHelper.GetSystemSetting<bool>("AllowInsecureHttp");
+            AllowCors = IpConfigurationHelper.GetSystemSetting<bool>("AllowCors");
         }
     }
 }

@@ -96,7 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commons\Configuration\ConfigurationHelper.cs" />
+    <Compile Include="Commons\Configuration\IpConfigurationHelper.cs" />
     <Compile Include="Commons\Extensions\IpDataExtensions.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseDataLayer.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseParameter.cs" />

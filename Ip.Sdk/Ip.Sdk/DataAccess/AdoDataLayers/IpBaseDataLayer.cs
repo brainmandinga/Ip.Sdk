@@ -53,7 +53,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers
             ConnectionString = connectionString;
             ProviderFactory = DbProviderFactories.GetFactory(provider);
             DatabaseProvider = provider;
-            QueryTimeout = ConfigurationHelper.GetSystemSetting<int>("QueryTimeoutInSeconds");
+            QueryTimeout = IpConfigurationHelper.GetSystemSetting<int>("QueryTimeoutInSeconds");
         }
 
         /// <summary>
