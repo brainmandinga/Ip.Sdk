@@ -1,9 +1,9 @@
-﻿using Ip.Sdk.ErrorHandling.CustomExceptions;
+﻿using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
+using Ip.Sdk.ErrorHandling.CustomExceptions;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
 {
@@ -31,14 +31,15 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             _parameters.Add(parameter);
         }
 
+        #region MySql Params
         /// <summary>
-        /// Adds a parameter to the Parameters collection
+        /// Creates and adds the DB Parameter
         /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="value">The value of the parameter</param>
-        /// <param name="parameterType">The data type of the parameter</param>
-        /// <param name="dataLayer">The data layer to look for implementations</param>
-        public virtual void AddParameter(string name, object value, DbType parameterType, IpBaseDataLayer dataLayer)
+        /// <param name="name">The parameter name</param>
+        /// <param name="value">The parameter value</param>
+        /// <param name="parameter">Optionally injectible parameter object</param>
+        /// <param name="isNullable">Optional parameter indicating if the value is nullable to set the DBNull object, defaults to false</param>
+        public void AddParameter(string name, object value, IIpMySqlParameter parameter, bool isNullable = false)
         {
             #region Validations
             if (string.IsNullOrWhiteSpace(name))
@@ -46,24 +47,34 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
                 throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
             }
 
-            if (dataLayer == null)
+            if (!isNullable && value == null)
             {
-                throw new IpDataAccessParameterException("The data layer used is null");
+                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
             }
             #endregion
 
-            AddParameter(CreateParameterByProvider(dataLayer, dataLayer.DatabaseProvider), name, value, parameterType);            
-        }        
+            try
+            {
+                parameter = parameter ?? new IpMySqlParameter();
+                parameter.CreateParameter(name, value, isNullable);
+
+                Parameters.Add(parameter.DataParameter);
+            }
+            catch (Exception ex)
+            {
+                throw new IpDataAccessParameterException("An error occured creating the parameter", ex);
+            }
+        }
 
         /// <summary>
-        /// Adds a parameter to the Parameters collection
+        /// Creates and adds the DB Parameter
         /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="value">The value of the parameter</param>
-        /// <param name="parameterType">The data type of the parameter</param>
-        /// <param name="dataLayer">The data layer to look for implementations</param>
-        /// <param name="provider">The database provider</param>
-        public virtual void AddParameterByProvider(string name, object value, DbType parameterType, IpBaseDataLayer dataLayer, string provider)
+        /// <param name="name">The parameter name</param>
+        /// <param name="value">The parameter value</param>
+        /// <param name="dbType">The data type of the parameter</param>
+        /// <param name="isNullable">Optional parameter indicating if the value is nullable to set the DBNull object, defaults to false</param>
+        /// <param name="parameter">Optionally injectible parameter object</param>
+        public void AddParameter(string name, object value, MySqlDbType dbType, bool isNullable = false, IIpMySqlParameter parameter = null)
         {
             #region Validations
             if (string.IsNullOrWhiteSpace(name))
@@ -71,29 +82,35 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
                 throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
             }
 
-            if (dataLayer == null)
+            if (!isNullable && value == null)
             {
-                throw new IpDataAccessParameterException("The data layer used is null");
-            }
-
-            if (string.IsNullOrWhiteSpace(provider))
-            {
-                throw new IpDataAccessParameterException(string.Format("The database provider: {0} is null or empty", provider == null ? "null" : "empty"));
+                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
             }
             #endregion
 
-            AddParameter(CreateParameterByProvider(dataLayer, provider), name, value, parameterType);
+            try
+            {
+                parameter = parameter ?? new IpMySqlParameter();
+                parameter.CreateParameter(name, value, dbType, isNullable);
+
+                Parameters.Add(parameter.DataParameter);
+            }
+            catch (Exception ex)
+            {
+                throw new IpDataAccessParameterException("An error occured creating the parameter", ex);
+            }
         }
 
         /// <summary>
-        /// Adds a parameter to the Parameters collection
+        /// Creates and adds the DB Parameter
         /// </summary>
-        /// <param name="name">The name of the parameter</param>
-        /// <param name="value">The value of the parameter</param>
-        /// <param name="parameterType">The data type of the parameter</param>
-        /// <param name="dataLayer">The data layer to look for implementations</param>
-        /// <param name="dbType">The type of database</param>
-        public virtual void AddParameterByDbType(string name, object value, DbType parameterType, IpBaseDataLayer dataLayer, string dbType)
+        /// <param name="name">The parameter name</param>
+        /// <param name="value">The parameter value</param>
+        /// <param name="dbType">The data type of the parameter</param>
+        /// <param name="direction">The input, output direction of the parameter</param>
+        /// <param name="isNullable">Optional parameter indicating if the value is nullable to set the DBNull object, defaults to false</param>
+        /// <param name="parameter">Optionally injectible parameter object</param>
+        public void AddParameter(string name, object value, MySqlDbType dbType, ParameterDirection direction, bool isNullable = false, IIpMySqlParameter parameter = null)
         {
             #region Validations
             if (string.IsNullOrWhiteSpace(name))
@@ -101,113 +118,131 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
                 throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
             }
 
-            if (dataLayer == null)
+            if (!isNullable && value == null)
             {
-                throw new IpDataAccessParameterException("The data layer used is null");
-            }
-
-            if (string.IsNullOrWhiteSpace(dbType))
-            {
-                throw new IpDataAccessParameterException(string.Format("The database type: {0} is null or empty", dbType == null ? "null" : "empty"));
+                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
             }
             #endregion
 
-            AddParameter(CreateParameterByDbType(dataLayer, dbType), name, value, parameterType);
-        }
+            try
+            {
+                parameter = parameter ?? new IpMySqlParameter();
+                parameter.CreateParameter(name, value, dbType, direction, isNullable);
 
+                Parameters.Add(parameter.DataParameter);
+            }
+            catch (Exception ex)
+            {
+                throw new IpDataAccessParameterException("An error occured creating the parameter", ex);
+            }
+        }
+        #endregion
+
+        #region MS SQL Params
         /// <summary>
-        /// Creates a parameter by its database name
+        /// Creates and adds the DB Parameter
         /// </summary>
-        /// <param name="dataLayer">The data layer to look for implementations</param>
-        /// <param name="databaseType">The database type being used</param>
-        /// <returns>A newly instantiated IDbDataParameter</returns>
-        public virtual IDbDataParameter CreateParameterByDbType(IpBaseDataLayer dataLayer, string databaseType)
+        /// <param name="name">The parameter name</param>
+        /// <param name="value">The parameter value</param>
+        /// <param name="parameter">Optionally injectible parameter object</param>
+        /// <param name="isNullable">Optional parameter indicating if the value is nullable to set the DBNull object, defaults to false</param>
+        public void AddParameter(string name, object value, IIpMsSqlParameter parameter, bool isNullable = false)
         {
             #region Validations
-            if (dataLayer == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new IpDataAccessParameterException("The provided data layer is null");
+                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
             }
 
-            if (dataLayer.DatabaseType == null)
+            if (!isNullable && value == null)
             {
-                throw new IpDataAccessParameterException("The provided data layer's Database Type object is null");
-            }
-
-            if (string.IsNullOrWhiteSpace(databaseType))
-            {
-                throw new IpDataAccessParameterException(string.Format("The database type: {0} was null or empty", databaseType == null ? "null" : "empty"));
-            }
-
-            if (dataLayer.DatabaseType == null || !dataLayer.DatabaseType.IpDbTypes.ContainsKey(databaseType))
-            {
-                throw new IpDataAccessParameterException(string.Format("No data layer implemetnations match the database type: {0}.", databaseType));
+                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
             }
             #endregion
 
-            return CreateParameterByProvider(dataLayer, dataLayer.DatabaseType.GetProviderFromIpDatabaseType(databaseType));
-        }
+            try
+            {
+                parameter = parameter ?? new IpMsSqlParameter();
+                parameter.CreateParameter(name, value, isNullable);
+
+                Parameters.Add(parameter.DataParameter);
+            }
+            catch (Exception ex)
+            {
+                throw new IpDataAccessParameterException("An error occured creating the parameter", ex);
+            }
+        }    
 
         /// <summary>
-        /// Creates a parameter by its provider
+        /// Creates and adds the DB Parameter
         /// </summary>
-        /// <param name="dataLayer">The data layer to look for implementations</param>
-        /// <param name="providerName">The name of the provider</param>
-        /// <returns>A newly instantiated IDbDataParameter</returns>
-        public virtual IDbDataParameter CreateParameterByProvider(IpBaseDataLayer dataLayer, string providerName)
+        /// <param name="name">The parameter name</param>
+        /// <param name="value">The parameter value</param>
+        /// <param name="dbType">The data type of the parameter</param>
+        /// <param name="isNullable">Optional parameter indicating if the value is nullable to set the DBNull object, defaults to false</param>
+        /// <param name="parameter">Optionally injectible parameter object</param>
+        public void AddParameter(string name, object value, SqlDbType dbType, bool isNullable = false, IIpMsSqlParameter parameter = null)
         {
             #region Validations
-            if (dataLayer == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
-                throw new IpDataAccessParameterException("The provided data layer is null");
+                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
             }
 
-            if (dataLayer.DatabaseType == null)
+            if (!isNullable && value == null)
             {
-                throw new IpDataAccessParameterException("The provided data layer's Database Type object is null");
-            }
-
-            if (string.IsNullOrWhiteSpace(providerName))
-            {
-                throw new IpDataAccessParameterException(string.Format("The provider name: {0} was null or empty", providerName == null ? "null" : "empty"));
-            }
-
-            if (dataLayer.DatabaseType == null || !dataLayer.DatabaseType.IpDbTypeProviders.ContainsKey(providerName))
-            {
-                throw new IpDataAccessParameterException(string.Format("No data layer implemetnations match the provider: {0}.", providerName));
+                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
             }
             #endregion
 
-            if (providerName.Equals("System.Data.SqlClient", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                return new SqlParameter();
-            }
+                parameter = parameter ?? new IpMsSqlParameter();
+                parameter.CreateParameter(name, value, dbType, isNullable);
 
-            if (providerName.Equals("MySql.Data.MySqlClient", StringComparison.OrdinalIgnoreCase))
+                Parameters.Add(parameter.DataParameter);
+            }
+            catch (Exception ex)
             {
-                return new MySqlParameter();
+                throw new IpDataAccessParameterException("An error occured creating the parameter", ex);
             }
-
-            return CreateParameterByProviderExtended(dataLayer, providerName);
         }
 
         /// <summary>
-        /// Overrideable method to create a parameter by its provider from a derived class
+        /// Creates and adds the DB Parameter
         /// </summary>
-        /// <param name="dataLayer">The data layer to look for implementations</param>
-        /// <param name="providerName">The name of the provider</param>
-        /// <returns>A newly instantiated IDbDataParameter</returns>
-        public virtual IDbDataParameter CreateParameterByProviderExtended(IpBaseDataLayer dataLayer, string providerName)
+        /// <param name="name">The parameter name</param>
+        /// <param name="value">The parameter value</param>
+        /// <param name="dbType">The data type of the parameter</param>
+        /// <param name="direction">The input, output direction of the parameter</param>
+        /// <param name="isNullable">Optional parameter indicating if the value is nullable to set the DBNull object, defaults to false</param>
+        /// <param name="parameter">Optionally injectible parameter object</param>
+        public void AddParameter(string name, object value, SqlDbType dbType, ParameterDirection direction, bool isNullable = false, IIpMsSqlParameter parameter = null)
         {
-            throw new IpDataAccessParameterException(string.Format("No data layer implemetnations match the provider: {0}.", providerName));
+            #region Validations
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+            }
+
+            if (!isNullable && value == null)
+            {
+                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+            }
+            #endregion
+
+            try
+            {
+                parameter = parameter ?? new IpMsSqlParameter();
+                parameter.CreateParameter(name, value, dbType, direction, isNullable);
+
+                Parameters.Add(parameter.DataParameter);
+            }
+            catch (Exception ex)
+            {
+                throw new IpDataAccessParameterException("An error occured creating the parameter", ex);
+            }
         }
-        
-        private void AddParameter(IDbDataParameter baseParam, string name, object value, DbType parameterType)
-        {
-            baseParam.ParameterName = name;
-            baseParam.Value = value ?? DBNull.Value;
-            baseParam.DbType = parameterType;
-            _parameters.Add(baseParam);
-        }
+        #endregion
     }
 }

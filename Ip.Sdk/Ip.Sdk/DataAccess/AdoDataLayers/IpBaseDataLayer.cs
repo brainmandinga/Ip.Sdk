@@ -1,6 +1,6 @@
 ﻿using Ip.Sdk.Commons.Configuration;
 using Ip.Sdk.Commons.Extensions;
-using Ip.Sdk.DataAccess.ReferenceData;
+using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;
 using System.Collections.Generic;
@@ -21,22 +21,17 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers
     /// <summary>
     /// Base class as an abstract for the data layers
     /// </summary>
-    public abstract class IpBaseDataLayer
+    public abstract class IpBaseDataLayer : IIpBaseDataLayer
     {
         /// <summary>
         /// The Connection string
         /// </summary>
-        public string ConnectionString;
+        public string ConnectionString { get; set; }
 
         /// <summary>
         /// A Factory for a specific provider to create a connection string
         /// </summary>
         public DbProviderFactory ProviderFactory { get; private set; }
-
-        /// <summary>
-        /// The Type of Database The DataLayer is
-        /// </summary>
-        public IpDatabaseType DatabaseType { get; }
 
         /// <summary>
         /// The provider of the database
@@ -53,12 +48,10 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers
         /// </summary>
         /// <param name="connectionString">The Connection String</param>
         /// <param name="provider">The Provider for the connection</param>
-        /// <param name="dbType">An optionally injected custom database type. If none is provided a standard database type object will be created with defaults</param>
-        protected IpBaseDataLayer(string connectionString, string provider, IpDatabaseType dbType)
+        protected IpBaseDataLayer(string connectionString, string provider)
         {
             ConnectionString = connectionString;
             ProviderFactory = DbProviderFactories.GetFactory(provider);
-            DatabaseType = dbType ?? new IpDatabaseType(true);
             DatabaseProvider = provider;
             QueryTimeout = ConfigurationHelper.GetSystemSetting<int>("QueryTimeoutInSeconds");
         }

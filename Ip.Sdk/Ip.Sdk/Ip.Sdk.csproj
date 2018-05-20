@@ -102,6 +102,14 @@
     <Compile Include="Commons\Enumerations\PasswordEditStatus.cs" />
     <Compile Include="Commons\Enumerations\TwoFactorMethod.cs" />
     <Compile Include="Commons\Extensions\IpDataExtensions.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseDataLayer.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseParameter.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpMsSqlDataLayer.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpMsSqlParameter.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpMySqlDataLayer.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpMySqlParameter.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\IpMsSqlParameter.cs" />
+    <Compile Include="DataAccess\AdoDataLayers\IpMySqlParameter.cs" />
     <Compile Include="ErrorHandling\SerializableException.cs" />
     <Compile Include="Commons\Extensions\IpStandardExtensions.cs" />
     <Compile Include="DataAccess\AdoDataLayers\IpBaseDataLayer.cs" />
@@ -109,7 +117,6 @@
     <Compile Include="DataAccess\AdoDataLayers\Factories\IpDataParameterFactory.cs" />
     <Compile Include="DataAccess\AdoDataLayers\IpMsSqlDataLayer.cs" />
     <Compile Include="DataAccess\AdoDataLayers\IpMySqlDataLayer.cs" />
-    <Compile Include="DataAccess\ReferenceData\IpDatabaseType.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpDataExtensionException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpBaseException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpDataAccessException.cs" />
@@ -119,6 +126,15 @@
     <Compile Include="ErrorHandling\CustomExceptions\IpSecurityException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpSystemSettingException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpTwoFactorValueException.cs" />
+    <Compile Include="Logging\Factories\IpLoggerFactory.cs" />
+    <Compile Include="Logging\Interfaces\IIpBaseLogger.cs" />
+    <Compile Include="Logging\Interfaces\IIpDatabaseLogger.cs" />
+    <Compile Include="Logging\Interfaces\IIpEventViewerLogger.cs" />
+    <Compile Include="Logging\Interfaces\IIpFileLogger.cs" />
+    <Compile Include="Logging\IpBaseLogger.cs" />
+    <Compile Include="Logging\IpDatabaseLogger.cs" />
+    <Compile Include="Logging\IpEventViewerLogger.cs" />
+    <Compile Include="Logging\IpFileLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthObjects\IpResponse.cs" />
     <Compile Include="Security\AuthObjects\BaseTwoFactorDestination.cs" />
@@ -137,7 +153,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commons\Attributes\" />
-    <Folder Include="Logging\" />
     <Folder Include="Messaging\" />
     <Folder Include="PaymentProcessing\" />
     <Folder Include="Scheduling\" />
