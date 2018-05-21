@@ -5,7 +5,7 @@ namespace Ip.Sdk.Security.AuthObjects
     /// <summary>
     /// Two factor destination for SMS
     /// </summary>
-    public class IpSmsTwoFactorDestination : IpBaseTwoFactorDestination, IIpSmsTwoFactorDestination
+    internal class IpSmsTwoFactorDestination : IpBaseTwoFactorDestination, IIpSmsTwoFactorDestination
     {
         /// <summary>
         /// Sends the two factor message

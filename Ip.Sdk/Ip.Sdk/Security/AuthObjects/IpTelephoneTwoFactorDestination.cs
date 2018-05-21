@@ -5,7 +5,7 @@ namespace Ip.Sdk.Security.AuthObjects
     /// <summary>
     /// Two factor destination for phone call
     /// </summary>
-    public class IpTelephoneTwoFactorDestination : IpBaseTwoFactorDestination, IIpTelephoneTwoFactorDestination
+    internal class IpTelephoneTwoFactorDestination : IpBaseTwoFactorDestination, IIpTelephoneTwoFactorDestination
     {
         /// <summary>
         /// Sends the two factor message

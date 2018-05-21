@@ -1,4 +1,6 @@
 ﻿using Ip.Sdk.Commons.Configuration;
+using Ip.Sdk.Commons.Configuration.Factories;
+using Ip.Sdk.Commons.Configuration.Interfaces;
 using Ip.Sdk.Commons.Extensions;
 using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
@@ -53,7 +55,9 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers
             ConnectionString = connectionString;
             ProviderFactory = DbProviderFactories.GetFactory(provider);
             DatabaseProvider = provider;
-            QueryTimeout = IpConfigurationHelper.GetSystemSetting<int>("QueryTimeoutInSeconds");
+
+            var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
+            QueryTimeout = configHelper.GetSetting("QueryTimeoutInSeconds", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ChangeType<int>();
         }
 
         /// <summary>

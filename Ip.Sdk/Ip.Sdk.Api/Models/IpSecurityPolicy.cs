@@ -1,7 +1,11 @@
 ﻿using Ip.Sdk.Commons.Configuration;
+using Ip.Sdk.Commons.Configuration.Factories;
+using Ip.Sdk.Commons.Configuration.Interfaces;
+using Ip.Sdk.Commons.Extensions;
 using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin.Security.OAuth;
 using System;
+using System.Collections.Generic;
 
 namespace Ip.Sdk.Api.Models
 {
@@ -92,8 +96,8 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         public virtual void LoadDefaultSecurityPolicy()
         {
-            //TODO: When the Configuration Helper has been refactored to be more abstract, this will need to change.
-            var providerFullyQualifiedType = IpConfigurationHelper.GetSystemSetting<string>("AuthProvider");
+            var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
+            var providerFullyQualifiedType = configHelper.GetSetting("AuthProvider", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToString();
 
             try
             {
@@ -107,18 +111,18 @@ namespace Ip.Sdk.Api.Models
             }
 
             //Load values from configuration
-            PasswordComplexityRegex = IpConfigurationHelper.GetSystemSetting<string>("PasswordComplexityRegex");
-            AuthenticationEndpoint = IpConfigurationHelper.GetSystemSetting<string>("AuthenticationEndpoint");
-            MinimumPasswordLength = IpConfigurationHelper.GetSystemSetting<int>("MinimumPasswordLength");
-            MaximumPasswordLength = IpConfigurationHelper.GetSystemSetting<int>("MaximumPasswordLength");
-            PasswordExpirationInDays = IpConfigurationHelper.GetSystemSetting<int>("PasswordExpirationInDays");
-            AuthTokenExpirationMinutes = IpConfigurationHelper.GetSystemSetting<int>("AuthTokenExpirationMinutes");
-            LockoutAttemptCount = IpConfigurationHelper.GetSystemSetting<int>("LockoutAttemptCount");
-            RequireRegistrationConfirmation = IpConfigurationHelper.GetSystemSetting<bool>("RequireRegistrationConfirmation");
-            UseTwoFactorAuthentication = IpConfigurationHelper.GetSystemSetting<bool>("UseTwoFactorAuthentication");
-            UseSecurityQuestions = IpConfigurationHelper.GetSystemSetting<bool>("UseSecurityQuestions");
-            AllowInsecureHttp = IpConfigurationHelper.GetSystemSetting<bool>("AllowInsecureHttp");
-            AllowCors = IpConfigurationHelper.GetSystemSetting<bool>("AllowCors");
+            PasswordComplexityRegex = configHelper.GetSetting("PasswordComplexityRegex", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToString();
+            AuthenticationEndpoint = configHelper.GetSetting("AuthenticationEndpoint", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToString();
+            MinimumPasswordLength = configHelper.GetSetting("MinimumPasswordLength", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ChangeType<int>();
+            MaximumPasswordLength = configHelper.GetSetting("MaximumPasswordLength", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ChangeType<int>();
+            PasswordExpirationInDays = configHelper.GetSetting("PasswordExpirationInDays", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ChangeType<int>();
+            AuthTokenExpirationMinutes = configHelper.GetSetting("AuthTokenExpirationMinutes", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ChangeType<int>();
+            LockoutAttemptCount = configHelper.GetSetting("LockoutAttemptCount", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ChangeType<int>();
+            RequireRegistrationConfirmation = configHelper.GetSetting("RequireRegistrationConfirmation", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToBool();
+            UseTwoFactorAuthentication = configHelper.GetSetting("UseTwoFactorAuthentication", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToBool();
+            UseSecurityQuestions = configHelper.GetSetting("UseSecurityQuestions", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToBool();
+            AllowInsecureHttp = configHelper.GetSetting("AllowInsecureHttp", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToBool();
+            AllowCors = configHelper.GetSetting("AllowCors", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToBool();
         }
     }
 }

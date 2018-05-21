@@ -5,7 +5,7 @@ namespace Ip.Sdk.Security.AuthObjects
     /// <summary>
     /// Two factor destination for email
     /// </summary>
-    public class IpEmailTwoFactorDestination : IpBaseTwoFactorDestination, IIpEmailTwoFactorDestination
+    internal class IpEmailTwoFactorDestination : IpBaseTwoFactorDestination, IIpEmailTwoFactorDestination
     {
         /// <summary>
         /// Sends the two factor message

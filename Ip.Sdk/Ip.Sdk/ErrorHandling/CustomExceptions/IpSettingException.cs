@@ -5,19 +5,19 @@ namespace Ip.Sdk.ErrorHandling.CustomExceptions
     /// <summary>
     /// Custom Exception
     /// </summary>
-    public class IpSystemSettingException : IpBaseException
+    public class IpSettingException : IpBaseException
     {
         /// <summary>
         /// Custom exception
         /// </summary>
-        public IpSystemSettingException()
+        public IpSettingException()
             : base("An unknown error occured with the system settings") { }
 
         /// <summary>
         /// Custom exception with custom message
         /// </summary>
         /// <param name="message">The Custom Message</param>
-        public IpSystemSettingException(string message)
+        public IpSettingException(string message)
             : base(message) { }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Ip.Sdk.ErrorHandling.CustomExceptions
         /// </summary>
         /// <param name="message">The Custom Message</param>
         /// <param name="innerException">The Inner Exception</param>
-        public IpSystemSettingException(string message, Exception innerException)
+        public IpSettingException(string message, Exception innerException)
             : base(message, innerException) { }
     }
 }

@@ -96,7 +96,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commons\Configuration\IpConfigurationHelper.cs" />
+    <Compile Include="Commons\Configuration\Factories\IpSettingsFactory.cs" />
+    <Compile Include="Commons\Configuration\Interfaces\IIpBaseSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\Interfaces\IIpConfigurationSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\Interfaces\IIpDatabaseSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\Interfaces\IIpFileSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\Interfaces\IIpSettingArgument.cs" />
+    <Compile Include="Commons\Configuration\IpConfigurationSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\IpDatabaseSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\IpFileSettingsHelper.cs" />
+    <Compile Include="Commons\Configuration\IpSettingArgument.cs" />
     <Compile Include="Commons\Extensions\IpDataExtensions.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseDataLayer.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseParameter.cs" />
@@ -120,7 +129,7 @@
     <Compile Include="ErrorHandling\CustomExceptions\IpDatabaseTypeException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpDataLayerException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpSecurityException.cs" />
-    <Compile Include="ErrorHandling\CustomExceptions\IpSystemSettingException.cs" />
+    <Compile Include="ErrorHandling\CustomExceptions\IpSettingException.cs" />
     <Compile Include="ErrorHandling\CustomExceptions\IpTwoFactorValueException.cs" />
     <Compile Include="Logging\Factories\IpLoggerFactory.cs" />
     <Compile Include="Logging\Interfaces\IIpBaseLogger.cs" />
@@ -154,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commons\Attributes\" />
+    <Folder Include="Commons\Encryption\" />
     <Folder Include="Messaging\" />
     <Folder Include="PaymentProcessing\" />
     <Folder Include="Scheduling\" />
