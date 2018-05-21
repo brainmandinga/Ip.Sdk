@@ -1,5 +1,4 @@
 ﻿using Ip.Sdk.Configuration.Interfaces;
-using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System.Collections.Generic;
 using System.Linq;
 
