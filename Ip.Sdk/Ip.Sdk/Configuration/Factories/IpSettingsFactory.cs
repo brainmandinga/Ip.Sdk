@@ -1,6 +1,7 @@
-﻿using Ip.Sdk.Commons.Configuration.Interfaces;
+﻿using Ip.Sdk.Configuration.Interfaces;
+using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 
-namespace Ip.Sdk.Commons.Configuration.Factories
+namespace Ip.Sdk.Configuration.Factories
 {
     /// <summary>
     /// A factory for getting settings classes
@@ -21,20 +22,11 @@ namespace Ip.Sdk.Commons.Configuration.Factories
         /// Gets a Database Helper class
         /// </summary>
         /// <param name="helper">An optionally injectible helper object</param>
+        /// <param name="dataLayer">The Data Layer to Use</param>
         /// <returns>A Database Settings Helper</returns>
-        public IIpBaseSettingsHelper GetSettingsHelper(IIpDatabaseSettingsHelper helper)
+        public IIpBaseSettingsHelper GetSettingsHelper(IIpDatabaseSettingsHelper helper, IIpBaseDataLayer dataLayer)
         {
-            return helper ?? new IpDatabaseSettingsHelper();
-        }
-
-        /// <summary>
-        /// Gets a File Helper class
-        /// </summary>
-        /// <param name="helper">An optionally injectible helper object</param>
-        /// <returns>A File Settings Helper</returns>
-        public IIpBaseSettingsHelper GetSettingsHelper(IIpFileSettingsHelper helper)
-        {
-            return helper ?? new IpFileSettingsHelper();
+            return helper ?? new IpDatabaseSettingsHelper(dataLayer);
         }
     }
 }

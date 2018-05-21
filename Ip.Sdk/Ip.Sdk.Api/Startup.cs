@@ -1,9 +1,9 @@
 ﻿using Ip.Sdk.Api.Models;
-using Ip.Sdk.Commons.Configuration;
-using Ip.Sdk.Commons.Configuration.Factories;
-using Ip.Sdk.Commons.Configuration.Interfaces;
+using Ip.Sdk.Configuration;
+using Ip.Sdk.Configuration.Factories;
+using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.Commons.Extensions;
-using Ip.Sdk.Security.AuthObjects;
+using Ip.Sdk.Security;
 using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;

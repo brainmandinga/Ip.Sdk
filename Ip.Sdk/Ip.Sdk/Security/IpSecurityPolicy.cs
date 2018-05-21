@@ -1,7 +1,7 @@
 ﻿using Ip.Sdk.Security.Interfaces;
 using Microsoft.Owin.Security.OAuth;
 
-namespace Ip.Sdk.Security.AuthObjects
+namespace Ip.Sdk.Security
 {
     /// <summary>
     /// Delegate method for loading a security policy

@@ -1,11 +1,11 @@
-﻿using Ip.Sdk.Commons.Configuration.Interfaces;
+﻿using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
-namespace Ip.Sdk.Commons.Configuration
+namespace Ip.Sdk.Configuration
 {
     /// <summary>
     /// Helper class for getting and saving settings to the configuration file

@@ -1,5 +1,4 @@
-﻿using Ip.Sdk.Security.AuthObjects;
-using Ip.Sdk.Security.Interfaces;
+﻿using Ip.Sdk.Security.Interfaces;
 
 namespace Ip.Sdk.Security.Factories
 {

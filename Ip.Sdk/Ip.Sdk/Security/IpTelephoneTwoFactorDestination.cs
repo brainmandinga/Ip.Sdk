@@ -1,11 +1,11 @@
 ﻿using Ip.Sdk.Security.Interfaces;
 
-namespace Ip.Sdk.Security.AuthObjects
+namespace Ip.Sdk.Security
 {
     /// <summary>
-    /// Two factor destination for SMS
+    /// Two factor destination for phone call
     /// </summary>
-    internal class IpSmsTwoFactorDestination : IpBaseTwoFactorDestination, IIpSmsTwoFactorDestination
+    internal class IpTelephoneTwoFactorDestination : IpBaseTwoFactorDestination, IIpTelephoneTwoFactorDestination
     {
         /// <summary>
         /// Sends the two factor message

@@ -96,17 +96,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commons\Configuration\Factories\IpSettingsFactory.cs" />
-    <Compile Include="Commons\Configuration\Interfaces\IIpBaseSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\Interfaces\IIpConfigurationSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\Interfaces\IIpDatabaseSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\Interfaces\IIpFileSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\Interfaces\IIpSettingArgument.cs" />
-    <Compile Include="Commons\Configuration\IpBaseSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\IpConfigurationSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\IpDatabaseSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\IpFileSettingsHelper.cs" />
-    <Compile Include="Commons\Configuration\IpSettingArgument.cs" />
+    <Compile Include="Configuration\Factories\IpSettingsFactory.cs" />
+    <Compile Include="Configuration\Interfaces\IIpBaseSettingsHelper.cs" />
+    <Compile Include="Configuration\Interfaces\IIpConfigurationSettingsHelper.cs" />
+    <Compile Include="Configuration\Interfaces\IIpDatabaseSettingsHelper.cs" />
+    <Compile Include="Configuration\Interfaces\IIpSettingArgument.cs" />
+    <Compile Include="Configuration\IpBaseSettingsHelper.cs" />
+    <Compile Include="Configuration\IpConfigurationSettingsHelper.cs" />
+    <Compile Include="Configuration\IpDatabaseSettingsHelper.cs" />
+    <Compile Include="Configuration\IpSettingArgument.cs" />
+    <Compile Include="Encryption\Factories\IpEncryptionFactory.cs" />
+    <Compile Include="Encryption\Factories\IpHashingFactory.cs" />
+    <Compile Include="Encryption\Interfaces\IIpEncryption.cs" />
+    <Compile Include="Encryption\Interfaces\IIpHashing.cs" />
+    <Compile Include="Encryption\Interfaces\IIpRsaEncryption.cs" />
+    <Compile Include="Encryption\Interfaces\IIpSha512Hashing.cs" />
+    <Compile Include="Encryption\IpRsaEncryption.cs" />
+    <Compile Include="Encryption\IpSha512Hashing.cs" />
     <Compile Include="Commons\Extensions\IpDataExtensions.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseDataLayer.cs" />
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpBaseParameter.cs" />
@@ -142,12 +148,12 @@
     <Compile Include="Logging\IpEventViewerLogger.cs" />
     <Compile Include="Logging\IpFileLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\AuthObjects\IpResponse.cs" />
-    <Compile Include="Security\AuthObjects\IpBaseTwoFactorDestination.cs" />
-    <Compile Include="Security\AuthObjects\IpEmailTwoFactorDestination.cs" />
-    <Compile Include="Security\AuthObjects\IpSecurityPolicy.cs" />
-    <Compile Include="Security\AuthObjects\IpSmsTwoFactorDestination.cs" />
-    <Compile Include="Security\AuthObjects\IpTelephoneTwoFactorDestination.cs" />
+    <Compile Include="Security\IpResponse.cs" />
+    <Compile Include="Security\IpBaseTwoFactorDestination.cs" />
+    <Compile Include="Security\IpEmailTwoFactorDestination.cs" />
+    <Compile Include="Security\IpSecurityPolicy.cs" />
+    <Compile Include="Security\IpSmsTwoFactorDestination.cs" />
+    <Compile Include="Security\IpTelephoneTwoFactorDestination.cs" />
     <Compile Include="Security\Factories\IpTwoFactorFactory.cs" />
     <Compile Include="Security\Interfaces\IIpAuth.cs" />
     <Compile Include="Security\Interfaces\IIpBaseTwoFactorDestination.cs" />
@@ -165,7 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commons\Attributes\" />
-    <Folder Include="Commons\Encryption\" />
     <Folder Include="Messaging\" />
     <Folder Include="PaymentProcessing\" />
     <Folder Include="Scheduling\" />

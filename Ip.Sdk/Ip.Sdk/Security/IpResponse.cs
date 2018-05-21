@@ -1,6 +1,6 @@
 ﻿using Ip.Sdk.Security.Interfaces;
 
-namespace Ip.Sdk.Security.AuthObjects
+namespace Ip.Sdk.Security
 {
     /// <summary>
     /// Generic Response Object

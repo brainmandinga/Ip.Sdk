@@ -1,4 +1,4 @@
-﻿namespace Ip.Sdk.Commons.Configuration.Interfaces
+﻿namespace Ip.Sdk.Configuration.Interfaces
 {
     /// <summary>
     /// Interface for a setting argument for crud operations

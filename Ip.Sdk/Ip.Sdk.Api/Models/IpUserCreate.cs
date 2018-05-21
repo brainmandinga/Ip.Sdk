@@ -1,6 +1,6 @@
 ﻿using Ip.Sdk.Api.Enumerations;
 using Ip.Sdk.Commons.Extensions;
-using Ip.Sdk.Security.AuthObjects;
+using Ip.Sdk.Security;
 using Ip.Sdk.Security.Interfaces;
 using System.Threading.Tasks;
 

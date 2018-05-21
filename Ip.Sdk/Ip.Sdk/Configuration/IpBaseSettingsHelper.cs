@@ -1,9 +1,9 @@
-﻿using Ip.Sdk.Commons.Configuration.Interfaces;
+﻿using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ip.Sdk.Commons.Configuration
+namespace Ip.Sdk.Configuration
 {
     /// <summary>
     /// Abstract base class for settings helpers

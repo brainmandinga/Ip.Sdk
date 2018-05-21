@@ -1,5 +1,4 @@
-﻿using Ip.Sdk.Security.AuthObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

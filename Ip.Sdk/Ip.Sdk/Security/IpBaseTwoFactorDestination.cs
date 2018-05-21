@@ -2,7 +2,7 @@
 using Ip.Sdk.Security.Interfaces;
 using System.Text.RegularExpressions;
 
-namespace Ip.Sdk.Security.AuthObjects
+namespace Ip.Sdk.Security
 {
     /// <summary>
     /// Abstract class describing a base two factor authentication object

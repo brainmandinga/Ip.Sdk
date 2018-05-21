@@ -1,6 +1,6 @@
-﻿using Ip.Sdk.Commons.Configuration;
-using Ip.Sdk.Commons.Configuration.Factories;
-using Ip.Sdk.Commons.Configuration.Interfaces;
+﻿using Ip.Sdk.Configuration;
+using Ip.Sdk.Configuration.Factories;
+using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;

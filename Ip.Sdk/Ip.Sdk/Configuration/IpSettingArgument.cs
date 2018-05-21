@@ -1,7 +1,8 @@
-﻿using Ip.Sdk.Commons.Configuration.Interfaces;
+﻿using Ip.Sdk.Configuration.Interfaces;
 using System.Collections.Generic;
+using System.Data;
 
-namespace Ip.Sdk.Commons.Configuration
+namespace Ip.Sdk.Configuration
 {
     /// <summary>
     /// Class for a setting argument for crud operations
@@ -81,6 +82,23 @@ namespace Ip.Sdk.Commons.Configuration
             {
                 GetStandardConnectionStringArg(),
                 GetStandardSettingIdArg(connStringName)
+            };
+        }
+
+        /// <summary>
+        /// Static method to build setting arguments for a database setting helper
+        /// </summary>
+        /// <param name="commandText">The query or stored proc</param>
+        /// <param name="commandType">If it's a query or stored proc</param>
+        /// <param name="parameters">Parameters, if any</param>
+        /// <returns>A predefined set of args</returns>
+        public static IList<IIpSettingArgument> GetDatabaseArg(string commandText, CommandType commandType, IList<IDbDataParameter> parameters)
+        {
+            return new List<IIpSettingArgument>
+            {
+               new IpSettingArgument { ArgumentKey = "commandText", ArgumentValue = commandText },
+               new IpSettingArgument { ArgumentKey = "commandType", ArgumentValue = commandType },
+               new IpSettingArgument {ArgumentKey = "parameters", ArgumentValue = parameters }
             };
         }
     }
