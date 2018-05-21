@@ -1,4 +1,5 @@
 ﻿using Ip.Sdk.Commons.Configuration.Interfaces;
+using System.Collections.Generic;
 
 namespace Ip.Sdk.Commons.Configuration
 {
@@ -53,6 +54,34 @@ namespace Ip.Sdk.Commons.Configuration
         public static IpSettingArgument GetStandardSettingValueArg(string value)
         {
             return new IpSettingArgument { ArgumentKey = "SettingValue", ArgumentValue = value };
+        }
+
+        /// <summary>
+        /// Static Method to build setting arguments to get a setting from the configuration
+        /// </summary>
+        /// <param name="settingName">The name of the setting</param>
+        /// <returns>A predefined set of args</returns>
+        public static IList<IIpSettingArgument> GetConfigAppSetting(string settingName)
+        {
+            return new List<IIpSettingArgument>
+            {
+                GetStandardAppSettingArg(),
+                GetStandardSettingIdArg(settingName)
+            };
+        }
+
+        /// <summary>
+        /// Static Method to build setting arguments to get a connectionString from the configuration
+        /// </summary>
+        /// <param name="connStringName">The name of the connection string</param>
+        /// <returns>A predefined set of args</returns>
+        public static IList<IIpSettingArgument> GetConfigConnString(string connStringName)
+        {
+            return new List<IIpSettingArgument>
+            {
+                GetStandardConnectionStringArg(),
+                GetStandardSettingIdArg(connStringName)
+            };
         }
     }
 }

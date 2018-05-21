@@ -4,7 +4,6 @@ using Ip.Sdk.Commons.Configuration.Interfaces;
 using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
@@ -30,8 +29,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             #endregion
 
             var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-            var connString = (ConnectionStringSettings)configHelper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardConnectionStringArg(),
-                IpSettingArgument.GetStandardSettingIdArg(connectionStringName) });
+            var connString = (ConnectionStringSettings)configHelper.GetSetting(IpSettingArgument.GetConfigConnString(connectionStringName));
 
             return GetDataLayerByProvider(connString.ConnectionString, connString.ProviderName, useDefault);
         }
@@ -48,8 +46,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             if (string.IsNullOrWhiteSpace(providerName) && useDefault)
             {
                 var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-                var defaultProvider = configHelper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                    IpSettingArgument.GetStandardSettingIdArg("DefaultDatabaseProvider") }).ToString();
+                var defaultProvider = configHelper.GetSetting(IpSettingArgument.GetConfigAppSetting("DefaultDatabaseProvider")).ToString();
 
                 providerName = defaultProvider;
             }

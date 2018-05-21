@@ -57,8 +57,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers
             DatabaseProvider = provider;
 
             var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-            QueryTimeout = configHelper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("QueryTimeoutInSeconds") }).ChangeType<int>();
+            QueryTimeout = configHelper.GetSetting(IpSettingArgument.GetConfigAppSetting("QueryTimeoutInSeconds")).ChangeType<int>();
         }
 
         /// <summary>

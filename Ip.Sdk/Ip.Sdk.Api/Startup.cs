@@ -9,7 +9,6 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
-using System.Collections.Generic;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(Ip.Sdk.Api.Startup))]
@@ -65,9 +64,7 @@ namespace Ip.Sdk.Api
         private void LoadDefaultSecurityPolicy(IIpSecurityPolicy policy)
         {
             var helper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-
-            var providerFullyQualifiedType = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("AuthProvider") }).ToString();
+            var providerFullyQualifiedType = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("AuthProvider")).ToString();
 
             try
             {
@@ -81,41 +78,18 @@ namespace Ip.Sdk.Api
             }
 
             //Load values from configuration
-            policy.PasswordComplexityRegex = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("PasswordComplexityRegex") }).ToString();
-
-            policy.AuthenticationEndpoint = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("AuthenticationEndpoint") }).ToString();
-
-            policy.MinimumPasswordLength = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("MinimumPasswordLength") }).ChangeType<int>();
-
-            policy.MaximumPasswordLength = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("MaximumPasswordLength") }).ChangeType<int>();
-
-            policy.PasswordExpirationInDays = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("PasswordExpirationInDays") }).ChangeType<int>();
-
-            policy.AuthTokenExpirationMinutes = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("AuthTokenExpirationMinutes") }).ChangeType<int>();
-
-            policy.LockoutAttemptCount = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("LockoutAttemptCount") }).ChangeType<int>();
-
-            policy.RequireRegistrationConfirmation = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("RequireRegistrationConfirmation") }).ToBool();
-
-            policy.UseTwoFactorAuthentication = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("UseTwoFactorAuthentication") }).ToBool();
-
-            policy.UseSecurityQuestions = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("UseSecurityQuestions") }).ToBool();
-
-            policy.AllowInsecureHttp = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("AllowInsecureHttp") }).ToBool();
-
-            policy.AllowCors = helper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
-                IpSettingArgument.GetStandardSettingIdArg("AllowCors") }).ToBool();
+            policy.PasswordComplexityRegex = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("PasswordComplexityRegex")).ToString();
+            policy.AuthenticationEndpoint = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("AuthenticationEndpoint") ).ToString();
+            policy.MinimumPasswordLength = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("MinimumPasswordLength")).ChangeType<int>();
+            policy.MaximumPasswordLength = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("MaximumPasswordLength")).ChangeType<int>();
+            policy.PasswordExpirationInDays = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("PasswordExpirationInDays")).ChangeType<int>();
+            policy.AuthTokenExpirationMinutes = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("AuthTokenExpirationMinutes")).ChangeType<int>();
+            policy.LockoutAttemptCount = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("LockoutAttemptCount")).ChangeType<int>();
+            policy.RequireRegistrationConfirmation = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("RequireRegistrationConfirmation")).ToBool();
+            policy.UseTwoFactorAuthentication = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("UseTwoFactorAuthentication")).ToBool();
+            policy.UseSecurityQuestions = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("UseSecurityQuestions")).ToBool();
+            policy.AllowInsecureHttp = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("AllowInsecureHttp")).ToBool();
+            policy.AllowCors = helper.GetSetting(IpSettingArgument.GetConfigAppSetting("AllowCors")).ToBool();
         }
     }
 }
