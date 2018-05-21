@@ -10,33 +10,35 @@ namespace Ip.Sdk.Commons.Configuration
     /// <summary>
     /// Helper class for getting and saving settings to the configuration file
     /// </summary>
-    internal class IpConfigurationSettingsHelper : IIpConfigurationSettingsHelper
+    internal class IpConfigurationSettingsHelper : IpBaseSettingsHelper, IIpConfigurationSettingsHelper
     {
         /// <summary>
         /// Gets a setting by its Id
         /// </summary>
-        /// <param name="settingId">The Id of the setting</param>
         /// <param name="args">A collection of arguments for the settings</param>
         /// <returns>An object of type T</returns>
-        public object GetSetting(string settingId, IList<IIpSettingArgument> args)
+        public override object GetSetting(IList<IIpSettingArgument> args)
         {
-            var configSection = args.FirstOrDefault(a => a.ArgumentKey.Equals("configsection", StringComparison.OrdinalIgnoreCase));
-
             #region Validations
-            if (configSection == null)
+            var exceptions = ValidateSettingsArgs(args, new List<string> { "settingId", "configsection" });
+
+            if (exceptions.Any())
             {
-                throw new IpSettingException("Unable to find the ConfigSection Argument, to get the configuration");
+                throw new IpSettingException(string.Join(" | ", exceptions));
             }
             #endregion
 
+            var configSection = args.FirstOrDefault(a => a.ArgumentKey.Equals("configsection", StringComparison.OrdinalIgnoreCase));
+            var settingId = args.FirstOrDefault(a => a.ArgumentKey.Equals("settingid", StringComparison.OrdinalIgnoreCase));
+
             if (configSection.ArgumentValue.Equals("appsettings", StringComparison.OrdinalIgnoreCase))
             {
-                return GetSystemSetting(settingId);
+                return GetSystemSetting(settingId.ArgumentValue);
             }
             
             if (configSection.ArgumentValue.Equals("connectionstrings", StringComparison.OrdinalIgnoreCase))
             {
-                return GetConnectionString(settingId);
+                return GetConnectionString(settingId.ArgumentValue);
             }
 
             throw new IpSettingException(string.Format("Unable to find a Configuration for value: {0}", configSection.ArgumentValue));
@@ -45,10 +47,8 @@ namespace Ip.Sdk.Commons.Configuration
         /// <summary>
         /// Saves a setting
         /// </summary>
-        /// <param name="settingId">The Id of the setting</param>
-        /// <param name="settingValue">The value of the setting</param>
         /// <param name="args">A collection of arguments for the settings</param>
-        public void SaveSetting(string settingId, object settingValue, IList<IIpSettingArgument> args)
+        public override void SaveSetting(IList<IIpSettingArgument> args)
         {
             throw new IpSettingException("The base manager does not allow editing of configuration settings at runtime, please extend the factory and create a new class to handle this");
         }
@@ -56,9 +56,8 @@ namespace Ip.Sdk.Commons.Configuration
         /// <summary>
         /// Deletes a setting by Id
         /// </summary>
-        /// <param name="settingId">The Id of the setting</param>
         /// <param name="args">A collection of arguments for the settings</param>
-        public void DeleteSetting(string settingId, IList<IIpSettingArgument> args)
+        public override void DeleteSetting(IList<IIpSettingArgument> args)
         {
             throw new IpSettingException("The base manager does not allow editing of configuration settings at runtime, please extend the factory and create a new class to handle this");
         }

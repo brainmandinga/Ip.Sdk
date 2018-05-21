@@ -102,6 +102,7 @@
     <Compile Include="Commons\Configuration\Interfaces\IIpDatabaseSettingsHelper.cs" />
     <Compile Include="Commons\Configuration\Interfaces\IIpFileSettingsHelper.cs" />
     <Compile Include="Commons\Configuration\Interfaces\IIpSettingArgument.cs" />
+    <Compile Include="Commons\Configuration\IpBaseSettingsHelper.cs" />
     <Compile Include="Commons\Configuration\IpConfigurationSettingsHelper.cs" />
     <Compile Include="Commons\Configuration\IpDatabaseSettingsHelper.cs" />
     <Compile Include="Commons\Configuration\IpFileSettingsHelper.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Security\AuthObjects\IpResponse.cs" />
     <Compile Include="Security\AuthObjects\IpBaseTwoFactorDestination.cs" />
     <Compile Include="Security\AuthObjects\IpEmailTwoFactorDestination.cs" />
+    <Compile Include="Security\AuthObjects\IpSecurityPolicy.cs" />
     <Compile Include="Security\AuthObjects\IpSmsTwoFactorDestination.cs" />
     <Compile Include="Security\AuthObjects\IpTelephoneTwoFactorDestination.cs" />
     <Compile Include="Security\Factories\IpTwoFactorFactory.cs" />

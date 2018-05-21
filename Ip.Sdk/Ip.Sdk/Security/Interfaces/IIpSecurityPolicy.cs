@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin.Security.OAuth;
+﻿using Ip.Sdk.Commons.Configuration.Interfaces;
+using Microsoft.Owin.Security.OAuth;
 
 namespace Ip.Sdk.Security.Interfaces
 {
@@ -71,10 +72,5 @@ namespace Ip.Sdk.Security.Interfaces
         /// The OAuth authorization provide to use
         /// </summary>
         OAuthAuthorizationServerProvider Provider { get; set; }
-
-        /// <summary>
-        /// Loads the default security policy
-        /// </summary>
-        void LoadDefaultSecurityPolicy();
     }
 }

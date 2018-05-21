@@ -34,5 +34,25 @@ namespace Ip.Sdk.Commons.Configuration
         {
             return new IpSettingArgument { ArgumentKey = "ConfigSection", ArgumentValue = "connectionStrings" };
         }
+
+        /// <summary>
+        /// Static Method to Get Common Setting Id Arg
+        /// </summary>
+        /// <param name="value">The Value for the Setting Id</param>
+        /// <returns>A Setting Id Arg</returns>
+        public static IpSettingArgument GetStandardSettingIdArg(string value)
+        {
+            return new IpSettingArgument { ArgumentKey = "SettingId", ArgumentValue = value };
+        }
+
+        /// <summary>
+        /// Static Method to Get Common Setting Value Arg
+        /// </summary>
+        /// <param name="value">The Value for the Setting Value</param>
+        /// <returns>A Setting Value Arg</returns>
+        public static IpSettingArgument GetStandardSettingValueArg(string value)
+        {
+            return new IpSettingArgument { ArgumentKey = "SettingValue", ArgumentValue = value };
+        }
     }
 }

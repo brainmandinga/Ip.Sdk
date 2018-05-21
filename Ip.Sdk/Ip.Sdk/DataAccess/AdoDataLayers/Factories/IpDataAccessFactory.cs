@@ -30,7 +30,8 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             #endregion
 
             var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-            var connString = (ConnectionStringSettings)configHelper.GetSetting(connectionStringName, new List<IIpSettingArgument> { IpSettingArgument.GetStandardConnectionStringArg() });
+            var connString = (ConnectionStringSettings)configHelper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardConnectionStringArg(),
+                IpSettingArgument.GetStandardSettingIdArg(connectionStringName) });
 
             return GetDataLayerByProvider(connString.ConnectionString, connString.ProviderName, useDefault);
         }
@@ -47,7 +48,8 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             if (string.IsNullOrWhiteSpace(providerName) && useDefault)
             {
                 var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-                var defaultProvider = configHelper.GetSetting("DefaultDatabaseProvider", new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg() }).ToString();
+                var defaultProvider = configHelper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardAppSettingArg(),
+                    IpSettingArgument.GetStandardSettingIdArg("DefaultDatabaseProvider") }).ToString();
 
                 providerName = defaultProvider;
             }

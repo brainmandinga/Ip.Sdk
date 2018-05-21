@@ -12,7 +12,8 @@ namespace TestHarness
         static void Main(string[] args)
         {
             var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-            var connString = (ConnectionStringSettings)configHelper.GetSetting("Connection", new List<IIpSettingArgument> { IpSettingArgument.GetStandardConnectionStringArg() });
+            var connString = (ConnectionStringSettings)configHelper.GetSetting(new List<IIpSettingArgument> { IpSettingArgument.GetStandardConnectionStringArg(),
+                IpSettingArgument.GetStandardSettingIdArg("Connection") });
 
             Console.WriteLine(connString.ConnectionString);
             Console.ReadKey();
