@@ -1,5 +1,4 @@
-﻿using Ip.Sdk.Configuration.Interfaces;
-using Microsoft.Owin.Security.OAuth;
+﻿using Microsoft.Owin.Security.OAuth;
 
 namespace Ip.Sdk.Security.Interfaces
 {
