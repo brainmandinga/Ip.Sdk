@@ -99,6 +99,7 @@
     <Compile Include="Commons\Validators\Enumerations\IpInequalityValidationType.cs" />
     <Compile Include="Commons\Validators\Enumerations\IpStringValidationType.cs" />
     <Compile Include="Commons\Validators\Interfaces\IIpValidator.cs" />
+    <Compile Include="Commons\Validators\IpBoolInequalityValidator.cs" />
     <Compile Include="Commons\Validators\IpValidationHelper.cs" />
     <Compile Include="Commons\Validators\IpCharInequalityValidator.cs" />
     <Compile Include="Commons\Validators\IpCharRangeValidator.cs" />
