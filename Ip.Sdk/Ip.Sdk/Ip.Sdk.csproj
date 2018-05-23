@@ -96,6 +96,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commons\Validators\Enumerations\IpInequalityValidationType.cs" />
+    <Compile Include="Commons\Validators\Enumerations\IpStringValidationType.cs" />
+    <Compile Include="Commons\Validators\Interfaces\IIpValidator.cs" />
+    <Compile Include="Commons\Validators\IpValidationHelper.cs" />
+    <Compile Include="Commons\Validators\IpCharInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpCharRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpDateTimeInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpDateTimeRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpDecimalInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpDecimalRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpDoubleInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpDoubleRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpFloatInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpFloatRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpIntInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpIntRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpLongInequalityValidator.cs" />
+    <Compile Include="Commons\Validators\IpLongRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpRequiredObjectValidator.cs" />
+    <Compile Include="Commons\Validators\IpRangeValidator.cs" />
+    <Compile Include="Commons\Validators\IpRequiredStringValidator.cs" />
+    <Compile Include="Commons\Validators\IpStringInclusionValidator.cs" />
+    <Compile Include="Commons\Validators\IpStringValueValidator.cs" />
+    <Compile Include="Commons\Validators\IpTypeValidator.cs" />
+    <Compile Include="Commons\Validators\IpValidationResult.cs" />
     <Compile Include="Configuration\Factories\IpSettingsFactory.cs" />
     <Compile Include="Configuration\Interfaces\IIpBaseSettingsHelper.cs" />
     <Compile Include="Configuration\Interfaces\IIpConfigurationSettingsHelper.cs" />

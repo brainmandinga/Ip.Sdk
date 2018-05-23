@@ -2,7 +2,6 @@
 using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 
 namespace Ip.Sdk.Configuration
@@ -31,7 +30,7 @@ namespace Ip.Sdk.Configuration
         public override object GetSetting(IList<IIpSettingArgument> args)
         {
             #region Validations
-            var exceptions = ValidateSettingsArgs(args, new List<string> { "commandText", "commandType" });
+            var exceptions = ValidateSettingsArgs(args);
 
             if (exceptions.Any())
             {
@@ -42,23 +41,6 @@ namespace Ip.Sdk.Configuration
             var commandText = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtext", System.StringComparison.OrdinalIgnoreCase));
             var commandType = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtype", System.StringComparison.OrdinalIgnoreCase));
             var parameters = args.FirstOrDefault(a => a.ArgumentKey.Equals("parameters", System.StringComparison.OrdinalIgnoreCase));
-
-            #region Additional Validations
-            if (!commandText.ArgumentValue is string || string.IsNullOrWhiteSpace(commandText.ArgumentValue))
-            {
-                throw new IpSettingException("Command Text is not valid for GetSetting");
-            }
-
-            if (!commandType.ArgumentValue is CommandType)
-            {
-                throw new IpSettingException("Command Type is not valid for GetSetting");
-            }
-
-            if (!parameters.ArgumentValue is IList<IDbDataParameter>)
-            {
-                throw new IpSettingException("The Parameters is not a List of IDbDataParameters for GetSetting");
-            }
-            #endregion
 
             return _dataLayer.GetScalar<object>(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
         }
@@ -70,7 +52,7 @@ namespace Ip.Sdk.Configuration
         public override void SaveSetting(IList<IIpSettingArgument> args)
         {
             #region Validations
-            var exceptions = ValidateSettingsArgs(args, new List<string> { "commandText", "commandType" });
+            var exceptions = ValidateSettingsArgs(args);
 
             if (exceptions.Any())
             {
@@ -81,23 +63,6 @@ namespace Ip.Sdk.Configuration
             var commandText = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtext", System.StringComparison.OrdinalIgnoreCase));
             var commandType = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtype", System.StringComparison.OrdinalIgnoreCase));
             var parameters = args.FirstOrDefault(a => a.ArgumentKey.Equals("parameters", System.StringComparison.OrdinalIgnoreCase));
-
-            #region Additional Validations
-            if (!commandText.ArgumentValue is string || string.IsNullOrWhiteSpace(commandText.ArgumentValue))
-            {
-                throw new IpSettingException("Command Text is not valid for GetSetting");
-            }
-
-            if (!commandType.ArgumentValue is CommandType)
-            {
-                throw new IpSettingException("Command Type is not valid for GetSetting");
-            }
-
-            if (!parameters.ArgumentValue is IList<IDbDataParameter>)
-            {
-                throw new IpSettingException("The Parameters is not a List of IDbDataParameters for GetSetting");
-            }
-            #endregion
 
             _dataLayer.ExecuteNonQuery(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
         }
@@ -109,7 +74,7 @@ namespace Ip.Sdk.Configuration
         public override void DeleteSetting(IList<IIpSettingArgument> args)
         {
             #region Validations
-            var exceptions = ValidateSettingsArgs(args, new List<string> { "commandText", "commandType" });
+            var exceptions = ValidateSettingsArgs(args);
 
             if (exceptions.Any())
             {
@@ -120,23 +85,6 @@ namespace Ip.Sdk.Configuration
             var commandText = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtext", System.StringComparison.OrdinalIgnoreCase));
             var commandType = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtype", System.StringComparison.OrdinalIgnoreCase));
             var parameters = args.FirstOrDefault(a => a.ArgumentKey.Equals("parameters", System.StringComparison.OrdinalIgnoreCase));
-
-            #region Additional Validations
-            if (!commandText.ArgumentValue is string || string.IsNullOrWhiteSpace(commandText.ArgumentValue))
-            {
-                throw new IpSettingException("Command Text is not valid for GetSetting");
-            }
-
-            if (!commandType.ArgumentValue is CommandType)
-            {
-                throw new IpSettingException("Command Type is not valid for GetSetting");
-            }
-
-            if (!parameters.ArgumentValue is IList<IDbDataParameter>)
-            {
-                throw new IpSettingException("The Parameters is not a List of IDbDataParameters for GetSetting");
-            }
-            #endregion
 
             _dataLayer.ExecuteNonQuery(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
         }

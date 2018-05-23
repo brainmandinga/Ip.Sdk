@@ -1,9 +1,12 @@
-﻿using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
+﻿using Ip.Sdk.Commons.Validators;
+using Ip.Sdk.Commons.Validators.Interfaces;
+using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
 {
@@ -20,7 +23,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public IList<IDbDataParameter> Parameters
         {
             get { return _parameters = (_parameters ?? new List<IDbDataParameter>()); }
-        }
+        }        
 
         /// <summary>
         /// Method to add a pre-build database parameter. Use this when doing custom parameters or specialized for a certain type of database such as SQL Structured Parameters
@@ -42,14 +45,18 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public void AddParameter(string name, object value, IIpMySqlParameter parameter, bool isNullable = false)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(name))
+            var validators = new List<IIpValidator> { new IpRequiredStringValidator(name) };
+
+            if (!isNullable)
             {
-                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+                validators.Add(new IpRequiredObjectValidator(value));
             }
 
-            if (!isNullable && value == null)
+            var exceptions = IpValidationHelper.Validate(validators);
+
+            if (exceptions.Any())
             {
-                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+                throw new IpDataAccessParameterException(string.Join(" | ", exceptions));
             }
             #endregion
 
@@ -77,14 +84,18 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public void AddParameter(string name, object value, MySqlDbType dbType, bool isNullable = false, IIpMySqlParameter parameter = null)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(name))
+            var validators = new List<IIpValidator> { new IpRequiredStringValidator(name) };
+
+            if (!isNullable)
             {
-                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+                validators.Add(new IpRequiredObjectValidator(value));
             }
 
-            if (!isNullable && value == null)
+            var exceptions = IpValidationHelper.Validate(validators);
+
+            if (exceptions.Any())
             {
-                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+                throw new IpDataAccessParameterException(string.Join(" | ", exceptions));
             }
             #endregion
 
@@ -113,14 +124,18 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public void AddParameter(string name, object value, MySqlDbType dbType, ParameterDirection direction, bool isNullable = false, IIpMySqlParameter parameter = null)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(name))
+            var validators = new List<IIpValidator> { new IpRequiredStringValidator(name) };
+
+            if (!isNullable)
             {
-                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+                validators.Add(new IpRequiredObjectValidator(value));
             }
 
-            if (!isNullable && value == null)
+            var exceptions = IpValidationHelper.Validate(validators);
+
+            if (exceptions.Any())
             {
-                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+                throw new IpDataAccessParameterException(string.Join(" | ", exceptions));
             }
             #endregion
 
@@ -149,14 +164,18 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public void AddParameter(string name, object value, IIpMsSqlParameter parameter, bool isNullable = false)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(name))
+            var validators = new List<IIpValidator> { new IpRequiredStringValidator(name) };
+
+            if (!isNullable)
             {
-                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+                validators.Add(new IpRequiredObjectValidator(value));
             }
 
-            if (!isNullable && value == null)
+            var exceptions = IpValidationHelper.Validate(validators);
+
+            if (exceptions.Any())
             {
-                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+                throw new IpDataAccessParameterException(string.Join(" | ", exceptions));
             }
             #endregion
 
@@ -184,14 +203,18 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public void AddParameter(string name, object value, SqlDbType dbType, bool isNullable = false, IIpMsSqlParameter parameter = null)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(name))
+            var validators = new List<IIpValidator> { new IpRequiredStringValidator(name) };
+
+            if (!isNullable)
             {
-                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+                validators.Add(new IpRequiredObjectValidator(value));
             }
 
-            if (!isNullable && value == null)
+            var exceptions = IpValidationHelper.Validate(validators);
+
+            if (exceptions.Any())
             {
-                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+                throw new IpDataAccessParameterException(string.Join(" | ", exceptions));
             }
             #endregion
 
@@ -220,14 +243,18 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public void AddParameter(string name, object value, SqlDbType dbType, ParameterDirection direction, bool isNullable = false, IIpMsSqlParameter parameter = null)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(name))
+            var validators = new List<IIpValidator> { new IpRequiredStringValidator(name) };
+
+            if (!isNullable)
             {
-                throw new IpDataAccessParameterException(string.Format("The parameter name: {0} is null or empty", name == null ? "null" : "empty"));
+                validators.Add(new IpRequiredObjectValidator(value));
             }
 
-            if (!isNullable && value == null)
+            var exceptions = IpValidationHelper.Validate(validators);
+
+            if (exceptions.Any())
             {
-                throw new IpDataAccessParameterException(string.Format("Non-nullable parameter: {0} is null.", name));
+                throw new IpDataAccessParameterException(string.Join(" | ", exceptions));
             }
             #endregion
 

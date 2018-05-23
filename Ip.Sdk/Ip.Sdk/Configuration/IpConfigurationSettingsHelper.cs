@@ -20,7 +20,7 @@ namespace Ip.Sdk.Configuration
         public override object GetSetting(IList<IIpSettingArgument> args)
         {
             #region Validations
-            var exceptions = ValidateSettingsArgs(args, new List<string> { "settingId", "configsection" });
+            var exceptions = ValidateSettingsArgs(args);
 
             if (exceptions.Any())
             {

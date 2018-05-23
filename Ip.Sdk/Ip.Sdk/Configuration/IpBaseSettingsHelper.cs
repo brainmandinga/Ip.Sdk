@@ -1,4 +1,7 @@
-﻿using Ip.Sdk.Configuration.Interfaces;
+﻿using Ip.Sdk.Commons.Validators;
+using Ip.Sdk.Configuration.Interfaces;
+using Ip.Sdk.ErrorHandling.CustomExceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,20 +16,26 @@ namespace Ip.Sdk.Configuration
         /// Validates that the args have the required keys present
         /// </summary>
         /// <param name="args">The arguments to validate</param>
-        /// <param name="requiredKeys">The required keys</param>
-        public virtual IList<string> ValidateSettingsArgs(IList<IIpSettingArgument> args, IList<string> requiredKeys)
+        public virtual IList<string> ValidateSettingsArgs(IList<IIpSettingArgument> args)
         {
-            var exceptions = new List<string>();
-
-            foreach (var rk in requiredKeys)
+            try
             {
-                if (!args.Any(a => a.ArgumentKey.Equals(rk, System.StringComparison.OrdinalIgnoreCase)))
-                {
-                    exceptions.Add(string.Format("Required Key: {0} is missing from the settings arguments", rk));
-                }
-            }
+                var retVal = new List<string>();
+                var results = new List<IList<IpValidationResult>>();
 
-            return exceptions;
+                foreach (var a in args)
+                {
+                    results.Add(a.Validate());
+                }
+
+                retVal.AddRange(results.SelectMany(r => r.Where(v => !v.IsValid)).Select(fv => fv.ValidationMessage));
+
+                return retVal;
+            }
+            catch (Exception ex)
+            {
+                throw new IpSettingException("Validation of the settings failed.", ex);
+            }
         }
 
         /// <summary>

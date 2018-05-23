@@ -1,10 +1,14 @@
-﻿using Ip.Sdk.Configuration;
+﻿using Ip.Sdk.Commons.Validators;
+using Ip.Sdk.Commons.Validators.Interfaces;
+using Ip.Sdk.Configuration;
 using Ip.Sdk.Configuration.Factories;
 using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.DataAccess.AdoDataLayers.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 
 namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
 {
@@ -22,9 +26,12 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
         public virtual IIpBaseDataLayer GetDataLayer(string connectionStringName, bool useDefault = false)
         {
             #region Validations
-            if (string.IsNullOrWhiteSpace(connectionStringName))
+            var exceptions = IpValidationHelper.Validate(new List<IIpValidator> { new IpRequiredStringValidator(connectionStringName) });
+
+
+            if (exceptions.Any())
             {
-                throw new IpDataLayerException(string.Format("The provided connection string name: {0} is not a valid value.", connectionStringName == null ? "null" : "empty"));
+                throw new IpDataAccessException(string.Join(" | ", exceptions));
             }
             #endregion
 
