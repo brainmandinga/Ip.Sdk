@@ -16,17 +16,18 @@ namespace Ip.Sdk.Logging.Factories
         /// <returns>A logger</returns>
         public IIpBaseLogger GetLogger(IIpDatabaseLogger logger, IIpBaseDataLayer dataLayer)
         {
-            return logger ?? new IpDatabaseLogger();
+            return logger ?? new IpDatabaseLogger(dataLayer);
         }
 
         /// <summary>
         /// Gets an event viewer logger object
         /// </summary>
         /// <param name="logger">An optionally injectible logger object</param>
+        /// <param name="computerName">The name of the computer who's event viewer to write to</param>
         /// <returns>A logger</returns>
-        public IIpBaseLogger GetLogger(IIpEventViewerLogger logger)
+        public IIpBaseLogger GetLogger(IIpEventViewerLogger logger, string computerName)
         {
-            return logger ?? new IpEventViewerLogger();
+            return logger ?? new IpEventViewerLogger(computerName);
         }
 
         /// <summary>

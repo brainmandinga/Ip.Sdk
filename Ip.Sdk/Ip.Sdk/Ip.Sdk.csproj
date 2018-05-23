@@ -149,6 +149,7 @@
     <Compile Include="DataAccess\AdoDataLayers\Interfaces\IIpMySqlParameter.cs" />
     <Compile Include="DataAccess\AdoDataLayers\IpMsSqlParameter.cs" />
     <Compile Include="DataAccess\AdoDataLayers\IpMySqlParameter.cs" />
+    <Compile Include="ErrorHandling\IpLoggingException.cs" />
     <Compile Include="ErrorHandling\SerializableException.cs" />
     <Compile Include="Commons\Extensions\IpStandardExtensions.cs" />
     <Compile Include="DataAccess\AdoDataLayers\IpBaseDataLayer.cs" />

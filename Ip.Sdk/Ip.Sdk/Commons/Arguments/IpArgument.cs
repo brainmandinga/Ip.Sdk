@@ -1,6 +1,7 @@
 ﻿using Ip.Sdk.Commons.Arguments.Interfaces;
 using Ip.Sdk.Commons.Validators;
 using Ip.Sdk.Commons.Validators.Interfaces;
+using Ip.Sdk.DataAccess.AdoDataLayers;
 using System.Collections.Generic;
 using System.Data;
 
@@ -247,6 +248,77 @@ namespace Ip.Sdk.Commons.Arguments
             retVal.Add(queryArg);
             retVal.Add(typeArg);
             retVal.Add(paramArg);
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Static method to build setting arguments for a database setting helper
+        /// </summary>
+        /// <param name="commandText">The query or stored proc</param>
+        /// <param name="commandType">If it's a query or stored proc</param>
+        /// <param name="parameters">Parameters, if any</param>
+        /// <param name="builder">The delegate method to build the object of type T</param>
+        /// <returns>A predefined set of args</returns>
+        public static IList<IIpArgument> GetDatabaseArg<T>(string commandText, CommandType commandType, IList<IDbDataParameter> parameters, BuildDataObject<T> builder)
+        {
+            var retVal = new List<IIpArgument>();
+            var queryArg = new IpArgument { ArgumentKey = "commandText", ArgumentValue = commandText };
+            var paramArg = new IpArgument { ArgumentKey = "parameters", ArgumentValue = parameters };
+            var builderArg = new IpArgument { ArgumentKey = "builder", ArgumentValue = builder };
+
+            queryArg.KeyValidators = new List<IIpValidator>
+            {
+                new IpRequiredStringValidator(queryArg.ArgumentKey),
+                new IpStringValueValidator(queryArg.ArgumentKey, "commandText")
+            };
+
+            queryArg.ValueValidators = new List<IIpValidator>
+            {
+                new IpTypeValidator<string>(queryArg.ArgumentValue),
+                new IpRequiredStringValidator(queryArg.ArgumentValue)
+            };
+
+            var typeArg = new IpArgument { ArgumentKey = "commandType", ArgumentValue = commandType };
+
+            typeArg.KeyValidators = new List<IIpValidator>
+            {
+                new IpRequiredStringValidator(typeArg.ArgumentKey),
+                new IpStringValueValidator(typeArg.ArgumentKey, "commandType")
+            };
+
+            typeArg.ValueValidators = new List<IIpValidator>
+            {
+                new IpRequiredStringValidator(queryArg.ArgumentValue),
+                new IpTypeValidator<CommandType>(queryArg.ArgumentValue)
+            };
+
+            paramArg.KeyValidators = new List<IIpValidator>
+            {
+                new IpRequiredStringValidator(typeArg.ArgumentKey),
+                new IpStringValueValidator(typeArg.ArgumentKey, "parameters")
+            };
+
+            paramArg.ValueValidators = new List<IIpValidator>
+            {
+                new IpTypeValidator<IList<IDbDataParameter>>(paramArg.ArgumentValue)
+            };
+
+            builderArg.KeyValidators = new List<IIpValidator>
+            {
+                new IpRequiredStringValidator(builderArg.ArgumentKey),
+                new IpStringValueValidator(builderArg.ArgumentKey, "builder")
+            };
+
+            builderArg.ValueValidators = new List<IIpValidator>
+            {
+                new IpTypeValidator<BuildDataObject<T>>(builderArg.ArgumentValue)
+            };
+
+            retVal.Add(queryArg);
+            retVal.Add(typeArg);
+            retVal.Add(paramArg);
+            retVal.Add(builderArg);
 
             return retVal;
         }

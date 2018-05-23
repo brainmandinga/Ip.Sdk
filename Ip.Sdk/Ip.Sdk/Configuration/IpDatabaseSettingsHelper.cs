@@ -12,7 +12,7 @@ namespace Ip.Sdk.Configuration
     /// </summary>
     internal class IpDatabaseSettingsHelper : IpBaseSettingsHelper, IIpDatabaseSettingsHelper
     {
-        private IIpBaseDataLayer _dataLayer;
+        protected IIpBaseDataLayer DataLayer { get; set; }
 
         /// <summary>
         /// The Constructor
@@ -20,7 +20,7 @@ namespace Ip.Sdk.Configuration
         /// <param name="dataLayer">The data layer to use</param>
         public IpDatabaseSettingsHelper(IIpBaseDataLayer dataLayer)
         {
-            _dataLayer = dataLayer ?? throw new IpSettingException("The data layer provided to the database settings helper cannot be null");
+            DataLayer = dataLayer ?? throw new IpSettingException("The data layer provided to the database settings helper cannot be null");
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Ip.Sdk.Configuration
             var commandType = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtype", System.StringComparison.OrdinalIgnoreCase));
             var parameters = args.FirstOrDefault(a => a.ArgumentKey.Equals("parameters", System.StringComparison.OrdinalIgnoreCase));
 
-            return _dataLayer.GetScalar<object>(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
+            return DataLayer.GetScalar<object>(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Ip.Sdk.Configuration
             var commandType = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtype", System.StringComparison.OrdinalIgnoreCase));
             var parameters = args.FirstOrDefault(a => a.ArgumentKey.Equals("parameters", System.StringComparison.OrdinalIgnoreCase));
 
-            _dataLayer.ExecuteNonQuery(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
+            DataLayer.ExecuteNonQuery(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Ip.Sdk.Configuration
             var commandType = args.FirstOrDefault(a => a.ArgumentKey.Equals("commandtype", System.StringComparison.OrdinalIgnoreCase));
             var parameters = args.FirstOrDefault(a => a.ArgumentKey.Equals("parameters", System.StringComparison.OrdinalIgnoreCase));
 
-            _dataLayer.ExecuteNonQuery(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
+            DataLayer.ExecuteNonQuery(commandText.ArgumentValue, commandType.ArgumentValue, parameters.ArgumentValue);
         }
     }
 }
