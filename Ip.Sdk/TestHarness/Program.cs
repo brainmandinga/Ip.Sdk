@@ -1,6 +1,5 @@
 ﻿using Ip.Sdk.Configuration;
 using Ip.Sdk.Configuration.Factories;
-using Ip.Sdk.Configuration.Interfaces;
 using System;
 using System.Configuration;
 
@@ -10,7 +9,7 @@ namespace TestHarness
     {
         static void Main(string[] args)
         {
-            var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
+            var configHelper = new IpSettingsFactory().GetSettingsHelper(null);
             var connString = (ConnectionStringSettings)configHelper.GetSetting(IpSettingArgument.GetConfigConnString("Connection"));
             var allowCors = configHelper.GetSetting(IpSettingArgument.GetConfigAppSetting("AllowCors"));
 
