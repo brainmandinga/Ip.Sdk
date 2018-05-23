@@ -5,7 +5,7 @@ namespace Ip.Sdk.Api.Enumerations
     /// <summary>
     /// Statuses for Password Edits
     /// </summary>
-    public enum PasswordEditStatus
+    public enum IpPasswordEditStatus
     {
         /// <summary>
         /// Successful authentication

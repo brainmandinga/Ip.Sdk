@@ -31,7 +31,7 @@ namespace Ip.Sdk.Api.Models
             var validPassword = ValidatePassword(user.Password, user.ConfirmPassword);
             var validUser = ValidateUser(user);
 
-            if (validPassword != PasswordEditStatus.Success)
+            if (validPassword != IpPasswordEditStatus.Success)
             {
                 return new IpResponse { Status = (int)IpUserEditStatus.PasswordInvalid, ResponseMessage = validPassword.ToDescription() };
             }

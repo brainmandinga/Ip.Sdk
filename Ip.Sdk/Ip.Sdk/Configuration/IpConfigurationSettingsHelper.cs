@@ -1,4 +1,5 @@
-﻿using Ip.Sdk.Configuration.Interfaces;
+﻿using Ip.Sdk.Commons.Arguments.Interfaces;
+using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Ip.Sdk.Configuration
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
         /// <returns>An object of type T</returns>
-        public override object GetSetting(IList<IIpSettingArgument> args)
+        public override object GetSetting(IList<IIpArgument> args)
         {
             #region Validations
             var exceptions = ValidateSettingsArgs(args);
@@ -48,7 +49,7 @@ namespace Ip.Sdk.Configuration
         /// Saves a setting
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
-        public override void SaveSetting(IList<IIpSettingArgument> args)
+        public override void SaveSetting(IList<IIpArgument> args)
         {
             throw new IpSettingException("The base manager does not allow editing of configuration settings at runtime, please extend the factory and create a new class to handle this");
         }
@@ -57,7 +58,7 @@ namespace Ip.Sdk.Configuration
         /// Deletes a setting by Id
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
-        public override void DeleteSetting(IList<IIpSettingArgument> args)
+        public override void DeleteSetting(IList<IIpArgument> args)
         {
             throw new IpSettingException("The base manager does not allow editing of configuration settings at runtime, please extend the factory and create a new class to handle this");
         }

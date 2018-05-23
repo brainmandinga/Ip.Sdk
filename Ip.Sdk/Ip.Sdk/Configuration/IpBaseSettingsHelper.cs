@@ -1,4 +1,5 @@
-﻿using Ip.Sdk.Commons.Validators;
+﻿using Ip.Sdk.Commons.Arguments.Interfaces;
+using Ip.Sdk.Commons.Validators;
 using Ip.Sdk.Configuration.Interfaces;
 using Ip.Sdk.ErrorHandling.CustomExceptions;
 using System;
@@ -16,7 +17,7 @@ namespace Ip.Sdk.Configuration
         /// Validates that the args have the required keys present
         /// </summary>
         /// <param name="args">The arguments to validate</param>
-        public virtual IList<string> ValidateSettingsArgs(IList<IIpSettingArgument> args)
+        public virtual IList<string> ValidateSettingsArgs(IList<IIpArgument> args)
         {
             try
             {
@@ -43,18 +44,18 @@ namespace Ip.Sdk.Configuration
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
         /// <returns>An object of type T</returns>
-        public abstract object GetSetting(IList<IIpSettingArgument> args);
+        public abstract object GetSetting(IList<IIpArgument> args);
 
         /// <summary>
         /// Saves a setting
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
-        public abstract void SaveSetting(IList<IIpSettingArgument> args);
+        public abstract void SaveSetting(IList<IIpArgument> args);
 
         /// <summary>
         /// Deletes a setting by Id
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
-        public abstract void DeleteSetting(IList<IIpSettingArgument> args);
+        public abstract void DeleteSetting(IList<IIpArgument> args);
     }
 }

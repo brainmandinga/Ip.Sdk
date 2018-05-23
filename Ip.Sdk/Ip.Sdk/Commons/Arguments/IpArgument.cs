@@ -1,15 +1,15 @@
-﻿using Ip.Sdk.Commons.Validators;
+﻿using Ip.Sdk.Commons.Arguments.Interfaces;
+using Ip.Sdk.Commons.Validators;
 using Ip.Sdk.Commons.Validators.Interfaces;
-using Ip.Sdk.Configuration.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 
-namespace Ip.Sdk.Configuration
+namespace Ip.Sdk.Commons.Arguments
 {
     /// <summary>
     /// Class for a setting argument for crud operations
     /// </summary>
-    public class IpSettingArgument : IIpSettingArgument
+    public class IpArgument : IIpArgument
     {
         private IList<IIpValidator> _keyValidators;
         private IList<IIpValidator> _valueValidators;
@@ -78,9 +78,9 @@ namespace Ip.Sdk.Configuration
         /// Static Method to Get Common App Settings Arg
         /// </summary>
         /// <returns>An App Settings Arg</returns>
-        public static IpSettingArgument GetStandardAppSettingArg()
+        public static IIpArgument GetStandardAppSettingArg()
         {
-            var retVal = new IpSettingArgument { ArgumentKey = "ConfigSection", ArgumentValue = "appSettings" };
+            var retVal = new IpArgument { ArgumentKey = "ConfigSection", ArgumentValue = "appSettings" };
 
             retVal.KeyValidators = new List<IIpValidator>
             {
@@ -100,9 +100,9 @@ namespace Ip.Sdk.Configuration
         /// Static Method to Get Common Connection String Arg
         /// </summary>
         /// <returns>A Connection String Arg</returns>
-        public static IpSettingArgument GetStandardConnectionStringArg()
+        public static IIpArgument GetStandardConnectionStringArg()
         {
-            var retVal = new IpSettingArgument { ArgumentKey = "ConfigSection", ArgumentValue = "connectionStrings" };
+            var retVal = new IpArgument { ArgumentKey = "ConfigSection", ArgumentValue = "connectionStrings" };
 
             retVal.KeyValidators = new List<IIpValidator>
             {
@@ -124,9 +124,9 @@ namespace Ip.Sdk.Configuration
         /// </summary>
         /// <param name="value">The Value for the Setting Id</param>
         /// <returns>A Setting Id Arg</returns>
-        public static IpSettingArgument GetStandardSettingIdArg(string value)
+        public static IIpArgument GetStandardSettingIdArg(string value)
         {
-            var retVal = new IpSettingArgument { ArgumentKey = "SettingId", ArgumentValue = value };
+            var retVal = new IpArgument { ArgumentKey = "SettingId", ArgumentValue = value };
 
             retVal.KeyValidators = new List<IIpValidator>
             {
@@ -147,9 +147,9 @@ namespace Ip.Sdk.Configuration
         /// </summary>
         /// <param name="value">The Value for the Setting Value</param>
         /// <returns>A Setting Value Arg</returns>
-        public static IpSettingArgument GetStandardSettingValueArg(string value)
+        public static IIpArgument GetStandardSettingValueArg(string value)
         {
-            var retVal = new IpSettingArgument { ArgumentKey = "SettingValue", ArgumentValue = value };
+            var retVal = new IpArgument { ArgumentKey = "SettingValue", ArgumentValue = value };
 
             retVal.KeyValidators = new List<IIpValidator>
             {
@@ -170,9 +170,9 @@ namespace Ip.Sdk.Configuration
         /// </summary>
         /// <param name="settingName">The name of the setting</param>
         /// <returns>A predefined set of args</returns>
-        public static IList<IIpSettingArgument> GetConfigAppSetting(string settingName)
+        public static IList<IIpArgument> GetConfigAppSetting(string settingName)
         {
-            return new List<IIpSettingArgument>
+            return new List<IIpArgument>
             {
                 GetStandardAppSettingArg(),
                 GetStandardSettingIdArg(settingName)
@@ -184,9 +184,9 @@ namespace Ip.Sdk.Configuration
         /// </summary>
         /// <param name="connStringName">The name of the connection string</param>
         /// <returns>A predefined set of args</returns>
-        public static IList<IIpSettingArgument> GetConfigConnString(string connStringName)
+        public static IList<IIpArgument> GetConfigConnString(string connStringName)
         {
-            return new List<IIpSettingArgument>
+            return new List<IIpArgument>
             {
                 GetStandardConnectionStringArg(),
                 GetStandardSettingIdArg(connStringName)
@@ -200,10 +200,10 @@ namespace Ip.Sdk.Configuration
         /// <param name="commandType">If it's a query or stored proc</param>
         /// <param name="parameters">Parameters, if any</param>
         /// <returns>A predefined set of args</returns>
-        public static IList<IIpSettingArgument> GetDatabaseArg(string commandText, CommandType commandType, IList<IDbDataParameter> parameters)
+        public static IList<IIpArgument> GetDatabaseArg(string commandText, CommandType commandType, IList<IDbDataParameter> parameters)
         {
-            var retVal = new List<IIpSettingArgument>();
-            var queryArg = new IpSettingArgument { ArgumentKey = "commandText", ArgumentValue = commandText };
+            var retVal = new List<IIpArgument>();
+            var queryArg = new IpArgument { ArgumentKey = "commandText", ArgumentValue = commandText };
 
             queryArg.KeyValidators = new List<IIpValidator>
             {
@@ -217,7 +217,7 @@ namespace Ip.Sdk.Configuration
                 new IpRequiredStringValidator(queryArg.ArgumentValue)
             };
 
-            var typeArg = new IpSettingArgument { ArgumentKey = "commandType", ArgumentValue = commandType };
+            var typeArg = new IpArgument { ArgumentKey = "commandType", ArgumentValue = commandType };
 
             typeArg.KeyValidators = new List<IIpValidator>
             {
@@ -231,7 +231,7 @@ namespace Ip.Sdk.Configuration
                 new IpTypeValidator<CommandType>(queryArg.ArgumentValue)
             };
 
-            var paramArg = new IpSettingArgument { ArgumentKey = "parameters", ArgumentValue = parameters };
+            var paramArg = new IpArgument { ArgumentKey = "parameters", ArgumentValue = parameters };
 
             paramArg.KeyValidators = new List<IIpValidator>
             {

@@ -109,9 +109,9 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IpUserController.cs" />
-    <Compile Include="Enumerations\AuthenticationStatus.cs" />
+    <Compile Include="Enumerations\IpAuthenticationStatus.cs" />
     <Compile Include="Enumerations\IpUserEditStatus.cs" />
-    <Compile Include="Enumerations\PasswordEditStatus.cs" />
+    <Compile Include="Enumerations\IpPasswordEditStatus.cs" />
     <Compile Include="Models\IpAuth.cs" />
     <Compile Include="Models\IpAuthorizationServerProvider.cs" />
     <Compile Include="Models\IpClaim.cs" />

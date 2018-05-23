@@ -1,4 +1,5 @@
-﻿using Ip.Sdk.Commons.Validators;
+﻿using Ip.Sdk.Commons.Arguments;
+using Ip.Sdk.Commons.Validators;
 using Ip.Sdk.Commons.Validators.Interfaces;
 using Ip.Sdk.Configuration;
 using Ip.Sdk.Configuration.Factories;
@@ -36,7 +37,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             #endregion
 
             var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-            var connString = (ConnectionStringSettings)configHelper.GetSetting(IpSettingArgument.GetConfigConnString(connectionStringName));
+            var connString = (ConnectionStringSettings)configHelper.GetSetting(IpArgument.GetConfigConnString(connectionStringName));
 
             return GetDataLayerByProvider(connString.ConnectionString, connString.ProviderName, useDefault);
         }
@@ -53,7 +54,7 @@ namespace Ip.Sdk.DataAccess.AdoDataLayers.Factories
             if (string.IsNullOrWhiteSpace(providerName) && useDefault)
             {
                 var configHelper = new IpSettingsFactory().GetSettingsHelper((IIpConfigurationSettingsHelper)null);
-                var defaultProvider = configHelper.GetSetting(IpSettingArgument.GetConfigAppSetting("DefaultDatabaseProvider")).ToString();
+                var defaultProvider = configHelper.GetSetting(IpArgument.GetConfigAppSetting("DefaultDatabaseProvider")).ToString();
 
                 providerName = defaultProvider;
             }

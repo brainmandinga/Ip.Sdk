@@ -5,7 +5,7 @@ namespace Ip.Sdk.Api.Enumerations
     /// <summary>
     /// An Enumeration for Authentication Status
     /// </summary>
-    public enum AuthenticationStatus
+    public enum IpAuthenticationStatus
     {
         /// <summary>
         /// Successful authentication

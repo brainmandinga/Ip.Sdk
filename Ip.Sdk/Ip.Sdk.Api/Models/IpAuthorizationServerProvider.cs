@@ -41,7 +41,7 @@ namespace Ip.Sdk.Api.Models
 
             var result = await user.AuthenticateAsync(context.UserName, context.Password);
 
-            if (result.Status != (int)AuthenticationStatus.Success)
+            if (result.Status != (int)IpAuthenticationStatus.Success)
             {
                 context.SetError("invalid_grant", "The username or password is incorrect");
                 return;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Ip.Sdk.Commons.Arguments.Interfaces;
+using System.Collections.Generic;
 
 namespace Ip.Sdk.Configuration.Interfaces
 {
@@ -12,18 +13,18 @@ namespace Ip.Sdk.Configuration.Interfaces
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
         /// <returns>An object of type T</returns>
-        object GetSetting(IList<IIpSettingArgument> args);
+        object GetSetting(IList<IIpArgument> args);
 
         /// <summary>
         /// Saves a setting
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
-        void SaveSetting(IList<IIpSettingArgument> args);
+        void SaveSetting(IList<IIpArgument> args);
 
         /// <summary>
         /// Deletes a setting by Id
         /// </summary>
         /// <param name="args">A collection of arguments for the settings</param>
-        void DeleteSetting(IList<IIpSettingArgument> args);
+        void DeleteSetting(IList<IIpArgument> args);
     }
 }

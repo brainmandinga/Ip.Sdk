@@ -334,7 +334,7 @@ namespace Ip.Sdk.Api.Models
         {
             var validPassword = ValidatePassword(password, confirmPassword);
 
-            if (validPassword != PasswordEditStatus.Success)
+            if (validPassword != IpPasswordEditStatus.Success)
             {
                 return new IpResponse { Status = (int)validPassword, ResponseMessage = validPassword.ToDescription() };
             }
@@ -381,7 +381,7 @@ namespace Ip.Sdk.Api.Models
         {
             var validPassword = ValidatePassword(password, confirmPassword);
 
-            if (validPassword != PasswordEditStatus.Success)
+            if (validPassword != IpPasswordEditStatus.Success)
             {
                 return new IpResponse { Status = (int)validPassword, ResponseMessage = validPassword.ToDescription() };
             }
@@ -409,7 +409,7 @@ namespace Ip.Sdk.Api.Models
         {
             var validQuestions = ValidateSecurityQuestions(securityAnswers);
 
-            if (validQuestions != PasswordEditStatus.Success)
+            if (validQuestions != IpPasswordEditStatus.Success)
             {
                 return new IpResponse { Status = (int)validQuestions, ResponseMessage = validQuestions.ToDescription() };
             }
@@ -439,12 +439,12 @@ namespace Ip.Sdk.Api.Models
             var validPassword = ValidatePassword(password, confirmPassword);
             var validQuestions = ValidateSecurityQuestions(securityAnswers);
 
-            if (validPassword != PasswordEditStatus.Success)
+            if (validPassword != IpPasswordEditStatus.Success)
             {
                 return new IpResponse { Status = (int)validPassword, ResponseMessage = validPassword.ToDescription() };
             }
 
-            if (validQuestions != PasswordEditStatus.Success)
+            if (validQuestions != IpPasswordEditStatus.Success)
             {
                 return new IpResponse { Status = (int)validQuestions, ResponseMessage = validQuestions.ToDescription() };
             }
@@ -471,34 +471,34 @@ namespace Ip.Sdk.Api.Models
         /// <param name="password">The password the user wants</param>
         /// <param name="confirmPassword">The confirmation of the password the user wants. This should match the password</param>
         /// <returns>A PasswordEditStatus indicating the result of the validation</returns>
-        protected virtual PasswordEditStatus ValidatePassword(string password, string confirmPassword)
+        protected virtual IpPasswordEditStatus ValidatePassword(string password, string confirmPassword)
         {
             if (string.IsNullOrWhiteSpace(password))
             {
-                return PasswordEditStatus.PasswordMissing;
+                return IpPasswordEditStatus.PasswordMissing;
             }
 
             if (string.IsNullOrWhiteSpace(confirmPassword))
             {
-                return PasswordEditStatus.ConfirmPasswordMissing;
+                return IpPasswordEditStatus.ConfirmPasswordMissing;
             }
 
             if (!password.Equals(confirmPassword))
             {
-                return PasswordEditStatus.MismatchPassword;
+                return IpPasswordEditStatus.MismatchPassword;
             }
 
             if (password.Length < UserSecurityPolicy.MaximumPasswordLength || password.Length > UserSecurityPolicy.MaximumPasswordLength)
             {
-                return PasswordEditStatus.PasswordInvalid;
+                return IpPasswordEditStatus.PasswordInvalid;
             }
 
             if (!Regex.IsMatch(password, UserSecurityPolicy.PasswordComplexityRegex))
             {
-                return PasswordEditStatus.PasswordInvalid;
+                return IpPasswordEditStatus.PasswordInvalid;
             }
 
-            return PasswordEditStatus.Success;
+            return IpPasswordEditStatus.Success;
         }
 
         /// <summary>
@@ -506,23 +506,23 @@ namespace Ip.Sdk.Api.Models
         /// </summary>
         /// <param name="securityAnswers">The questions and matching answers provided to compare against the user's data</param>
         /// <returns>A PasswordEditStatus indicating the result of the validation</returns>
-        protected virtual PasswordEditStatus ValidateSecurityQuestions(IList<IIpSecurityQuestion> securityAnswers)
+        protected virtual IpPasswordEditStatus ValidateSecurityQuestions(IList<IIpSecurityQuestion> securityAnswers)
         {
             if (securityAnswers == null || !securityAnswers.Any())
             {
-                return PasswordEditStatus.SecurityQuestionsMissing;
+                return IpPasswordEditStatus.SecurityQuestionsMissing;
             }
 
             foreach (var sa in securityAnswers)
             {
                 if (string.IsNullOrWhiteSpace(sa.Question) || string.IsNullOrWhiteSpace(sa.Answer))
                 {
-                    return PasswordEditStatus.SecurityQuestionsMissing;
+                    return IpPasswordEditStatus.SecurityQuestionsMissing;
                 }
 
                 if (!SecurityQuestions.Any(sq => sq.Question.Equals(sa.Question, StringComparison.OrdinalIgnoreCase)))
                 {
-                    return PasswordEditStatus.SecurityQuestionFailed;
+                    return IpPasswordEditStatus.SecurityQuestionFailed;
                 }
 
                 try
@@ -531,7 +531,7 @@ namespace Ip.Sdk.Api.Models
 
                     if (!question.Answer.Equals(sa.Answer, StringComparison.OrdinalIgnoreCase))
                     {
-                        return PasswordEditStatus.SecurityQuestionFailed;
+                        return IpPasswordEditStatus.SecurityQuestionFailed;
                     }
                 }
                 catch (Exception ex)
@@ -540,7 +540,7 @@ namespace Ip.Sdk.Api.Models
                 }                
             }
 
-            return PasswordEditStatus.Success;
+            return IpPasswordEditStatus.Success;
         }
 
         /// <summary>

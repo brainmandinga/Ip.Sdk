@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ip.Sdk.Logging.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Ip.Sdk.Logging
     /// <summary>
     /// Handles Logging to the database
     /// </summary>
-    internal class IpDatabaseLogger : IpBaseLogger
+    internal class IpDatabaseLogger : IpBaseLogger, IIpDatabaseLogger
     {
     }
 }

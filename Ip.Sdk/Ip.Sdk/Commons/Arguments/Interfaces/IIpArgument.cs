@@ -2,12 +2,12 @@
 using Ip.Sdk.Commons.Validators.Interfaces;
 using System.Collections.Generic;
 
-namespace Ip.Sdk.Configuration.Interfaces
+namespace Ip.Sdk.Commons.Arguments.Interfaces
 {
     /// <summary>
     /// Interface for a setting argument for crud operations
     /// </summary>
-    public interface IIpSettingArgument
+    public interface IIpArgument
     {
         /// <summary>
         /// The key for the argument
